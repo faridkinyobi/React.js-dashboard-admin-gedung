@@ -1,0 +1,6 @@
+export const START_FETCHING_JADWAL =
+  'redux/Jadwal/START_FETCHING_JADWAL';
+export const SUCCESS_FETCHING_JADWAL =
+  'redux/Jadwal/SUCCESS_FETCHING_JADWAL';
+export const ERROR_FETCHING_JADWAL =
+  'redux/Jadwal/ERROR_FETCHING_JADWAL';

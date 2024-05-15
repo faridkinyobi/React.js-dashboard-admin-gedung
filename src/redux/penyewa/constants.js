@@ -1,0 +1,6 @@
+export const START_FETCHING_PENYEWA =
+  'redux/Penyewa/START_FETCHING_PENYEWA';
+export const SUCCESS_FETCHING_PENYEWA =
+  'redux/Penyewa/SUCCESS_FETCHING_PENYEWA';
+export const ERROR_FETCHING_PENYEWA =
+  'redux/Penyewa/ERROR_FETCHING_PENYEWA';

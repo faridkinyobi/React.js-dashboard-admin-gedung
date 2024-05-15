@@ -1,0 +1,4 @@
+export const START_FETCHING_LAPORAN = "redux/Laporan/START_FETCHING_LAPORAN";
+export const SUCCESS_FETCHING_LAPORAN = "redux/Laporan/SUCCESS_FETCHING_LAPORAN";
+export const ERROR_FETCHING_LAPORAN = "redux/Laporan/ERROR_FETCHING_LAPORAN";
+export const SET_KEYWORD = "redux/Laporan/SET_KEYWORD";

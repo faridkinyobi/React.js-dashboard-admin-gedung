@@ -1,0 +1,3 @@
+export const START_FETCHING_PAKET = "redux/Paket/START_FETCHING_PAKET";
+export const SUCCESS_FETCHING_PAKET = "redux/Paket/SUCCESS_FETCHING_PAKET";
+export const ERROR_FETCHING_PAKET = "redux/Paket/ERROR_FETCHING_PAKET";

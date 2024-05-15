@@ -1,0 +1,6 @@
+export const START_FETCHING_PAYMENT =
+  'redux/Payment/START_FETCHING_PAYMENT';
+export const SUCCESS_FETCHING_PAYMENT =
+  'redux/Payment/SUCCESS_FETCHING_PAYMENT';
+export const ERROR_FETCHING_PAYMENT =
+  'redux/Payment/ERROR_FETCHING_PAYMENT';

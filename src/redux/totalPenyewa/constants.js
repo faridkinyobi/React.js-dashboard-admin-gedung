@@ -1,0 +1,3 @@
+export const START_FETCHING_CARD = "redux/Card/START_FETCHING_CARD";
+export const SUCCESS_FETCHING_CARD = "redux/Card/SUCCESS_FETCHING_CARD";
+export const ERROR_FETCHING_CARD = "redux/Card/ERROR_FETCHING_CARD";

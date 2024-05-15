@@ -1,0 +1,3 @@
+export const START_FETCHING_USER = "redux/User/START_FETCHING_USER";
+export const SUCCESS_FETCHING_USER = "redux/User/SUCCESS_FETCHING_USER";
+export const ERROR_FETCHING_USER = "redux/User/ERROR_FETCHING_USER";
