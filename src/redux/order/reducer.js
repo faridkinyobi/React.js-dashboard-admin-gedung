@@ -21,7 +21,8 @@ const initialState = {
   data: [],
   keyword: "",
   page: 1,
-  limit: 1,
+  limit: 10,
+  pages: 1,
   status: statuslist.idle,
 };
 
@@ -38,6 +39,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         status: statuslist.success,
         data: !action.Order ? action.totalStatus : action.Order,
+        pages: action.pages,
       };
     case SET_KEYWORD:
       return {

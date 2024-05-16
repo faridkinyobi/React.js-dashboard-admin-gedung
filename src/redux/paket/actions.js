@@ -31,16 +31,18 @@ export const errorFetchingPaket = () => {
   };
 };
 
-export const fetchPaket = () => {
+export const fetchPaket = (id, Paket) => {
   return async (dispatch) => {
     dispatch(startFetchingPaket());
 
     try {
       // await new Promise((delay) => setTimeout(delay, 100));
-      let res = await debouncedFetchPaket("/cms/pakets");
+      let res = await debouncedFetchPaket(
+        Paket ? `/cms/pakets/${id}` : "/cms/pakets"
+      );
       dispatch(
         successFetchingPaket({
-          Paket: res.data.data
+          Paket: res.data.data,
         })
       );
     } catch (error) {

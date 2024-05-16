@@ -25,11 +25,12 @@ export const startFetchingOrder = () => {
 };
 
 // SUCCESS
-export const successFetchingOrder = ({ Order, totalStatus }) => {
+export const successFetchingOrder = ({ Order, totalStatus,pages }) => {
   return {
     type: SUCCESS_FETCHING_ORDER,
     Order,
     totalStatus,
+    pages
   };
 };
 
@@ -116,10 +117,20 @@ export const fetchOrder = () => {
       };
 
       // await new Promise((delay) => setTimeout(delay, 100));
-      let res = await debouncedFetchOrder("/cms/ordersAll", params);
+      const res = await debouncedFetchOrder("/cms/ordersAll", params);
+      const _temp = [];
+      // res.data.data.order.forEach((items) => {
+      //   _temp.push({
+      //     date: items.date,
+      //     NumberOrder: items.historyPaket.title
+      //   })
+      // });
+      console.log(res.data.data)
+      console.log(_temp)
       dispatch(
         successFetchingOrder({
-          Order: res.data.data,
+          Order: res.data.data.order,
+          pages: res.data.data.pages
         })
       );
     } catch (error) {

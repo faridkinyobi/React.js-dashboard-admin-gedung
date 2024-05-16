@@ -26,22 +26,24 @@ export const successFetchingJadwal = ({ Jadwal }) => {
 };
 
 //ERROR
-export const errorFetchingJadwal= () => {
+export const errorFetchingJadwal = () => {
   return {
     type: ERROR_FETCHING_JADWAL,
   };
 };
 
-export const fetchJadwal = () => {
+export const fetchJadwal = (id, jadwal) => {
   return async (dispatch) => {
     dispatch(startFetchingJadwal());
 
     try {
       // await new Promise((delay) => setTimeout(delay, 100));
-      let res = await debouncedFetchJadwal("/cms/jadwal");
+      let res = await debouncedFetchJadwal(
+        jadwal ? `/cms/jadwal/${id}` : "/cms/jadwal"
+      );
       dispatch(
         successFetchingJadwal({
-          Jadwal: res.data.data
+          Jadwal: res.data.data,
         })
       );
     } catch (error) {

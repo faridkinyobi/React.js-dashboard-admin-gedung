@@ -77,7 +77,7 @@ export default function Paket() {
       <div className="mt-3 mb-2 overflow-x-scroll md:overflow-hidden">
         <table className=" text-center text-blue-20 w-full">
           <Thead
-            text={["Nama", "Paket", "Fasilitas", "Harga", "aktor"]}
+            text={["No", "Paket", "Fasilitas", "Harga", "aktor"]}
             className={"p-3"}
           />
           <tbody>

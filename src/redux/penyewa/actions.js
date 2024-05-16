@@ -31,12 +31,14 @@ export const errorFetchingPenyewa = () => {
   };
 };
 
-export const fetchPenyewa= () => {
+export const fetchPenyewa= (id,Byid) => {
   return async (dispatch) => {
     dispatch(startFetchingPenyewa());
-
     try {
-      let res = await debouncedFetchPenyewa("/cms/penyewa");
+      console.log(Byid,"byID")
+      let res = await debouncedFetchPenyewa(Byid? `/cms/penyewa/${id}`:"/cms/penyewa");
+      console.log(id)
+      console.log(res)
       dispatch(
         successFetchingPenyewa({
           Penyewa: res.data.data
