@@ -125,8 +125,8 @@ export const fetchOrder = () => {
       //     NumberOrder: items.historyPaket.title
       //   })
       // });
-      console.log(res.data.data)
-      console.log(_temp)
+      // console.log(res.data.data)
+      // console.log(_temp)
       dispatch(
         successFetchingOrder({
           Order: res.data.data.order,

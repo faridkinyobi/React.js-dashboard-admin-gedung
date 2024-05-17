@@ -22,10 +22,12 @@ export default function Index() {
   const { totalPemasukan, totalPengeluaran, Saldo } =
     laporan.data.length > 0
       ? {
-          totalPemasukan: laporan.data[0].totalPemasukan,
-          totalPengeluaran: laporan.data[0].totalPengeluaran,
+          totalPemasukan: laporan.data[laporan.data.length - 1].totalPemasukan,
+          totalPengeluaran:
+            laporan.data[laporan.data.length - 1].totalPengeluaran,
           Saldo:
-            laporan.data[0].totalPemasukan - laporan.data[0].totalPengeluaran,
+            laporan.data[laporan.data.length - 1].totalPemasukan -
+            laporan.data[laporan.data.length - 1].totalPengeluaran,
         }
       : { totalPemasukan: 0, totalPengeluaran: 0 };
   return (
