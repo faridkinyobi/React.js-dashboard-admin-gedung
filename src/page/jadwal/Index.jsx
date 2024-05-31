@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import Button from "../../components/Button";
 import Alert from "../../components/Alert";
 import Thead from "../../components/Thead";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 export default function Jadwal() {
   const dispatch = useDispatch();
@@ -54,9 +54,7 @@ export default function Jadwal() {
   return (
     <main className="items-center px-4 lg:px-20 ">
       <Button
-        className={
-          "btn bg-slate-300 border border-slate-400 py-3 px-10 hover:outline-slate-500 hover:bg-slate-500/90 shadow "
-        }
+        className={"btn_greey "}
         title={"Tambah"}
         onClick={() => navigate("/jadwal/create")}
       />
@@ -65,6 +63,7 @@ export default function Jadwal() {
           <Thead
             text={[
               "No",
+              "Date Creat",
               "tanggal mulai",
               "tanggal akhir",
               "waktu",
@@ -73,7 +72,7 @@ export default function Jadwal() {
               "status",
               "aktor",
             ]}
-            className={"px-8 py-2"}
+            className={"px-2 py-2"}
           />
           <tbody>
             {Jadwal.status === "process" ? (
@@ -84,6 +83,17 @@ export default function Jadwal() {
               Jadwal.data.map((item, index) => (
                 <tr className=" border border-blue-20" key={index}>
                   <td className="p-2">{(index += 1)}</td>
+                  <td>
+                    {new Date(item.createdAt).toLocaleString("id-ID", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                      timeZoneName: "short",
+                    })}
+                  </td>
                   <td>{format(new Date(item.tgl_mulai), "dd/MM/yyyy")}</td>
                   <td>
                     {item.tgl_akhir

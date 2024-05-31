@@ -1,30 +1,23 @@
 import React from "react";
 import Input from "../TextInput/Index";
+import { NumericFormat } from "react-number-format";
 export default function index({
   name,
   value,
-  type,
-  onChange,
-  placeholder,
   label,
-  className,
-  min,
-  maxLength,
-  pattern
+  onValueChange
+
 }) {
   return (
     <div className="Form-input flex  flex-col  col-span-1 my-1 ">
       <label className="label text-xl text-blue-40">{label}</label>
-      <Input
-        className={className}
-        type={type}
+      <NumericFormat
+        customInput={Input}
+        thousandSeparator={true}
+        prefix={"Rp "}
         name={name}
         value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        min={min}
-        maxLength={maxLength}
-        pattern={pattern}
+        onValueChange={onValueChange}
       />
     </div>
   );

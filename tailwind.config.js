@@ -19,7 +19,7 @@ module.exports = {
         },
         white: {
           10: "#ffff",
-          20: "#F8F8FF",
+          20: "#F8F8F2",
         },
         black: {
           10: "#000000",

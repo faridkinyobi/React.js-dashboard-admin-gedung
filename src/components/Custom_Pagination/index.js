@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 // import { fetchOrder, setPage } from "../../redux/order/actions";
-const CustomPagination = ({ pages, page, setPage, fetchOrder }) => {
+const CustomPagination = ({ pages, page, setPage, fetch }) => {
   const dispatch = useDispatch();
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= pages) {
       dispatch(setPage(page));
-      dispatch(fetchOrder());
+      dispatch(fetch());
     }
   };
 

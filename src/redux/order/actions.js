@@ -118,15 +118,6 @@ export const fetchOrder = () => {
 
       // await new Promise((delay) => setTimeout(delay, 100));
       const res = await debouncedFetchOrder("/cms/ordersAll", params);
-      const _temp = [];
-      // res.data.data.order.forEach((items) => {
-      //   _temp.push({
-      //     date: items.date,
-      //     NumberOrder: items.historyPaket.title
-      //   })
-      // });
-      // console.log(res.data.data)
-      // console.log(_temp)
       dispatch(
         successFetchingOrder({
           Order: res.data.data.order,

@@ -2,10 +2,14 @@ import {
   START_FETCHING_LAPORAN,
   SUCCESS_FETCHING_LAPORAN,
   ERROR_FETCHING_LAPORAN,
-  SET_KEYWORD,
+  SET_START_DATE,
+  SET_END_DATE,
+  SET_LIMIT,
+  SET_PAGE,
 } from "./constants";
 
 import { getData } from "../../utils/fatch";
+import moment from 'moment';
 import debounce from "debounce-promise";
 // import { clearNotif } from '../notif/actions';
 
@@ -19,10 +23,11 @@ export const startFetchingLaporan = () => {
 };
 
 // SUCCESS
-export const successFetchingLaporan = ({ laporan }) => {
+export const successFetchingLaporan = ({ laporan,pages }) => {
   return {
     type: SUCCESS_FETCHING_LAPORAN,
     laporan,
+    pages
   };
 };
 
@@ -32,31 +37,50 @@ export const errorFetchingLaporan = () => {
     type: ERROR_FETCHING_LAPORAN,
   };
 };
-export const setKeyword = (keyword) => {
-  return {
-    type: SET_KEYWORD,
-    keyword,
-  };
-};
 
 export const fetchLaporan = () => {
-  return async (dispatch) => {
+  return async (dispatch ,getState) => {
     dispatch(startFetchingLaporan());
 
     try {
-      // let params = {
-      //   keyword: getState().laporan.keyword,
-      // };
-
-      // await new Promise((delay) => setTimeout(delay, 100));
-      let res = await debouncedFetchLaporan("/cms/laporan");
+      let params = {
+        page: getState().Laporan?.page || 1,
+        limit: getState().Laporan?.limit || 10,
+        startDate: moment(getState().Laporan?.startDate).format('YYYY-MM-DD'),
+        endDate: moment(getState().Laporan?.endDate).format('YYYY-MM-DD'),
+      };
+      let res = await debouncedFetchLaporan("/cms/laporan",params);
       dispatch(
         successFetchingLaporan({
-          laporan: res.data.data,
+          laporan: res.data.data.data,
+          pages: res.data.data.pages
         })
       );
     } catch (error) {
       dispatch(errorFetchingLaporan());
     }
+  };
+};
+export const setPage = (page) => ({
+  type: SET_PAGE,
+  page,
+});
+
+export const setLimit = (limit) => ({
+  type: SET_LIMIT,
+  limit,
+});
+
+
+export const setEndDate = (endDate) => {
+  return {
+    type: SET_END_DATE,
+    endDate,
+  };
+};
+export const setStartDate = (startDate) => {
+  return {
+    type: SET_START_DATE,
+    startDate,
   };
 };

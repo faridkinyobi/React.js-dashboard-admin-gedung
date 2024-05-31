@@ -99,7 +99,7 @@ export default function Edit() {
     }
   };
   return (
-    <main className="bg-blue-30 md:h-[20rem] h-[28rem]">
+    <main className="md:h-[20rem] h-[28rem]">
       <div className="container flex  justify-center ">
         <div className="bg-white-20 md:ml-40 rounded-2xl mt-5  ">
           <div className="mx-10 my-6">

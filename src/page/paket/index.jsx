@@ -68,7 +68,7 @@ export default function Paket() {
       {access.tambah && (
         <Button
           className={
-            "btn bg-slate-300 border border-slate-400 py-3 px-10 hover:outline-slate-500 hover:bg-slate-500/90 shadow "
+            "btn_greey"
           }
           title={"Tambah"}
           onClick={() => navigate("/paket/create")}
@@ -103,7 +103,11 @@ export default function Paket() {
                       </div>
                       warga: {hargaItem.warga}
                       <br />
-                      harga: Rp.{hargaItem.hargadetail}
+                      harga:
+                      {hargaItem.hargadetail.toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      })}
                     </div>
                   ))}
                 </td>

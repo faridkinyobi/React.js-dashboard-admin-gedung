@@ -49,7 +49,7 @@ export default function Edit() {
   const handlePlusHarga = (e) => {
     e.preventDefault();
     let _temp = [...form.harga];
-    
+
     _temp.push({
       kegiatan: "",
       hari: "",
@@ -108,7 +108,7 @@ export default function Edit() {
     }
   };
   return (
-    <main className="bg-blue-30 md:h-[20rem] h-[28rem]">
+    <main className=" md:h-[20rem] h-[28rem]">
       <div className="container flex items-center justify-center">
         <div className="bg-white-20 md:ml-40 rounded-2xl mt-10 sm:mt-[9rem] lg:mt-[2rem]">
           <div className="m-10">

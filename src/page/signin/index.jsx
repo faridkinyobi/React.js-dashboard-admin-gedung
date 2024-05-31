@@ -47,7 +47,7 @@ export default function Signin() {
   return (
     <main className="md:h-[20rem] h-[28rem] ">
       <div className="container flex items-center justify-center">
-        <div className="md:ml-40 rounded-2xl mt-10 md:mt-[6rem] p-10 bg-blue-30 text-white-10  shadow-2xl">
+        <div className="md:ml-40 rounded-2xl mt-10 md:mt-[6rem] p-10 bg-whitw-20 text-blue-30  shadow-2xl">
           <h1 className="text-center font-bold text-3xl my-5">Sing In</h1>
           <FormSignin
             handleChange={handleChange}

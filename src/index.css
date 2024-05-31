@@ -21,6 +21,9 @@ html {
   .btn{ 
     @apply text-center my-1 rounded-full cursor-pointer  duration-300 transition-all ease-in-out outline-2 hover:outline 
   }
+  .btn_greey{ 
+    @apply text-center my-1 rounded-full cursor-pointer  duration-300 transition-all ease-in-out outline-2 hover:outline bg-slate-300 border border-slate-400 py-3 px-10 hover:outline-slate-500 hover:bg-slate-500/90 shadow 
+  }
   .btn_slate { 
     @apply   bg-slate-400 text-gray-40 hover:text-white-10 cursor-pointer  duration-300 transition-all ease-in-out outline-2 hover:outline hover:outline-slate-500 hover:bg-slate-400/70
   }

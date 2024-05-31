@@ -1,6 +1,8 @@
 import React from "react";
 import Input from "../../components/TextInputLabel";
 import Button from "../../components/Button";
+import { NumericFormat } from "react-number-format";
+import InputRp from "../../components/TextInputNumber/index";
 export default function Form({
   form,
   handleSubmit,
@@ -23,19 +25,19 @@ export default function Form({
           <Input
             name="titel"
             type="text"
-            placeholder="titel"
-            label="titel"
+            placeholder="Paket"
+            label="Titel paket yang disewakan "
             onChange={handleChange}
             value={form.titel}
           />
           {form.fasilitas.map((fasilitas, index) => (
-            <div key={index} >
+            <div key={index}>
               <Input
                 name="detail"
                 type="text"
-                placeholder="detail"
-                label="detail"
-                onChange={(e) => handleFasilitasChange(e,index)}
+                placeholder="Kursi Vip"
+                label="Detail Fasilitas"
+                onChange={(e) => handleFasilitasChange(e, index)}
                 value={fasilitas.detail}
               />
             </div>
@@ -43,7 +45,7 @@ export default function Form({
           <Button
             title="Tambah fasilitas"
             onClick={handlePlusFasilitas}
-            className={`mt-5 py-3 bg-blue-200 rounded-2xl`}
+            className={` btn mt-5 py-2 mx-1 px-5 border bg-blue-200 border-blue-400  hover:outline-blue-400 hover:bg-blue-400/90 shadow `}
           />
         </div>
         <div>
@@ -54,7 +56,7 @@ export default function Form({
                 type="text"
                 placeholder="kegiatan"
                 label="kegiatan"
-                onChange={(e) => handleHargaChange(e,index)}
+                onChange={(e) => handleHargaChange(e, index)}
                 value={harga.kegiata}
               />
               <Input
@@ -62,7 +64,7 @@ export default function Form({
                 type="text"
                 placeholder="hari"
                 label="hari"
-                onChange={(e) => handleHargaChange(e,index)}
+                onChange={(e) => handleHargaChange(e, index)}
                 value={harga.hari}
               />
               <Input
@@ -70,21 +72,28 @@ export default function Form({
                 type="text"
                 placeholder="warga"
                 label="warga"
-                onChange={(e) => handleHargaChange(e,index)}
+                onChange={(e) => handleHargaChange(e, index)}
                 value={harga.warga}
               />
-              <Input
+              <label>Harga Detail</label>
+              <InputRp
+                // customInput={Input}
+                // thousandSeparator={true}
+                prefix={"Rp "}
                 name="hargadetail"
-                type="text"
-                placeholder="hargadetail"
-                label="hargadetail"
-                onChange={(e) => handleHargaChange(e,index)}
                 value={harga.hargadetail}
+                onValueChange={(values) => {
+                  const { floatValue } = values;
+                  handleHargaChange(
+                    { target: { name: "hargadetail", value: floatValue } },
+                    index
+                  );
+                }}
               />
             </div>
           ))}
           <Button
-            className={`mt-5 py-3 bg-yellow-200 rounded-2xl`}
+            className={`btn mt-5 py-2 mx-1 px-5 border bg-yellow-200 border-yellow-400  hover:outline-yellow-400 hover:bg-yellow-400/90 shadow `}
             title="Tambah Harga"
             onClick={handlePlusHarga}
           />

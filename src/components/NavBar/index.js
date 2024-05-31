@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import Button from "../Button/index";
 import Link from "../NavLink/index";
+import img from "../../logo2.png"
 import {
   accessJadwal,
   accessPelanggan,
@@ -92,7 +93,7 @@ export default function NavBar() {
   return (
     <nav className="w-full  md:py-2 bg-blue-30 mb-8 drop-shadow-md">
       <div className=" padding-container flexBetween ">
-        <img src="logo2.png" alt="Logo" width={140} height={100} />
+        <img src={img} alt="Logo" width={140} height={100} />
         <div
           className={`lg:gap-1  md:flex ms:flex px-2  absolute md:static  w-full md:w-auto left-0 top-20  translate-all ease-in-out duration-700
            ${

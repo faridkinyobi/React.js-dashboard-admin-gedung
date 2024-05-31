@@ -18,22 +18,20 @@ export default function Order() {
   const location = useLocation();
   const { id } = useParams();
   const [Img, setImgBuk] = useState([]);
-  const { paket, jadwal, penyewa } = location.state || {};
-  const DatePenyewa = useSelector((state) => state.Penyewa);
+  const { paket, jadwal, penyewa, paymen } = location.state || {};
+  // const DatePenyewa = useSelector((state) => state.Penyewa);
   const Datapekets = useSelector((state) => state.Paket);
   const DataJadwal = useSelector((state) => state.Jadwal);
-
-  console.log(DataJadwal?.data.kegiatan);
+  // console.log(DataJadwal?.data.kegiatan);
   // console.log(paket, jadwal, penyewa, id,"bukti");
 
   const fetchOneBukti = async () => {
-    const res = await getData(`/cms/pembayaran/${id}`);
-    setImgBuk(res.data?.data);
-    Alert({
-      title: res?.response?.data?.msg ?? "name",
-      icon: "warning",
-    });
+    if (paymen === "transfer") {
+      const res = await getData(`/cms/pembayaran/${id}`);
+      setImgBuk(res.data?.data);
+    }
   };
+
   useEffect(() => {
     // dispatch(fetchPenyewa(penyewa, true));
     dispatch(fetchPaket(paket, true));
@@ -73,9 +71,10 @@ export default function Order() {
     });
     dispatch(fetchJadwal()); // Re-fetch data after status change
   };
+
   const formatDate = (date) => {
     const parsedDate = new Date(date);
-    return isValid(parsedDate) ? format(parsedDate, "dd/MM/yyyy") : "-";
+    return isValid(parsedDate) ? format(parsedDate, "dd/MM/yyyy h:i") : "-";
   };
   return (
     <main className="items-center px-4 lg:px-20 ">
@@ -87,35 +86,37 @@ export default function Order() {
         onClick={() => navigate("/Order")}
       />
       {/* start Map Bukti Pembayaran */}
-      <div className="overflow-x-scroll md:overflow-hidden flex-row">
-        <h1 className=" my-2">Bukti Nota pembayaran</h1>
-        <table className="text-left text-white-10 w-full">
-          <Thead
-            text={["Bukti Pembayaran Uang muka", " Bukti Pelunasan", "aktor"]}
-            className={"px-8 py-2"}
-          />
-          <tbody>
-            <tr className="border border-blue-20">
-              <td className="px-8 py-2 ">
-                <img
-                  width={100}
-                  height={100}
-                  src={`${config.api_image}/${Img?.BuktiUangMuka?.name}`}
-                  alt="50x50"
-                />
-              </td>
-              <td>
-                <img
-                  width={100}
-                  height={100}
-                  src={`${config.api_image}/${Img?.BuktiPelunasan?.name}`}
-                  alt="50x50"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {paymen === "transfer" && (
+        <div className="overflow-x-scroll md:overflow-hidden flex-row">
+          <h1 className=" my-2">Bukti Nota pembayaran</h1>
+          <table className="text-left text-white-10 w-full">
+            <Thead
+              text={["Bukti Pembayaran Uang muka", " Bukti Pelunasan", "aktor"]}
+              className={"px-8 py-2"}
+            />
+            <tbody>
+              <tr className="border border-blue-20">
+                <td className="px-8 py-2 ">
+                  <img
+                    width={100}
+                    height={100}
+                    src={`${config.api_image}/${Img?.BuktiUangMuka?.name}`}
+                    alt="50x50"
+                  />
+                </td>
+                <td>
+                  <img
+                    width={100}
+                    height={100}
+                    src={`${config.api_image}/${Img?.BuktiPelunasan?.name}`}
+                    alt="50x50"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
       {/* end Bukti Pembayaran */}
 
       {/* start Map  Paket */}
@@ -123,8 +124,8 @@ export default function Order() {
         <h1 className=" my-4">Paket</h1>
         <table className=" text-center text-blue-20 w-full">
           <Thead
-            text={["Nama", "Paket", "Fasilitas", "Harga"]}
-            className={"p-3"}
+            text={["Nama", "Fasilitas", "Harga"]}
+            className={" px-10 p-3"}
           />
           <tbody>
             <tr className="border border-blue-20">
@@ -205,7 +206,7 @@ export default function Order() {
                     // }
                     type="checkbox"
                     checked={
-                      DataJadwal?.data.status_kegiatan === "sudah dipesan"
+                      DataJadwal?.data?.status_kegiatan === "sudah dipesan"
                     }
                     onChange={() =>
                       handleStatusChange(

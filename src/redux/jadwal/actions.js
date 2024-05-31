@@ -41,6 +41,7 @@ export const fetchJadwal = (id, jadwal) => {
       let res = await debouncedFetchJadwal(
         jadwal ? `/cms/jadwal/${id}` : "/cms/jadwal"
       );
+
       dispatch(
         successFetchingJadwal({
           Jadwal: res.data.data,

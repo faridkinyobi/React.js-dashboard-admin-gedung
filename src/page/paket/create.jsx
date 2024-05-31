@@ -9,7 +9,7 @@ export default function Create() {
     titel: "",
     fasilitas: [
       {
-        detai: "",
+        detail: "",
       },
     ],
     harga: [
@@ -23,9 +23,9 @@ export default function Create() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const handlePlusHarga = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let _temp = [...form.harga];
     _temp.push({
       kegiatan: "",
@@ -43,10 +43,10 @@ export default function Create() {
     _temp.push({
       detail: "", // Changed from `detai` to `detail`
     });
-  
+
     setForm({ ...form, fasilitas: _temp }); // Changed from `harga` to `fasilitas`
   };
-  
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -76,7 +76,7 @@ export default function Create() {
       });
 
       setIsLoading(false);
-      navigate("/penyewa");
+      navigate("/paket");
     } else {
       setIsLoading(false);
       Alert({
@@ -99,12 +99,6 @@ export default function Create() {
             handleHargaChange={handleHargaChange}
             handlePlusFasilitas={handlePlusFasilitas}
           />
-          {/* <FormSignin
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-            /> */}
         </div>
       </div>
     </main>

@@ -54,9 +54,9 @@ export default function Order() {
   };
 
   const HandleCoba = (ids) => {
-    const { paket, jadwal, penyewa, _id } = ids;
+    const { paket, jadwal, penyewa, _id, paymen } = ids;
     navigate(`/order/bukti/${_id}`, {
-      state: { paket, jadwal, penyewa },
+      state: { paket, jadwal, penyewa, paymen },
     });
   };
 
@@ -107,18 +107,20 @@ export default function Order() {
       </div>
       <div className=" mt-3 mb-2 overflow-x-scroll md:overflow-hidden">
         <table className="text-center  w-full border border-blue-20">
-          <thead className=" bg-blue-400">
+          <thead className=" bg-blue-30 text-white-20">
             <tr className="">
               <th className="px-1 pl-3">No</th>
               <th className="px-2 ">Tanggal Order</th>
-              <th className="px-2 ">Namber Order</th>
+              <th className="px-6 ">Namber Order</th>
               <th className="px-2 ">Titel Peket</th>
               <th className="px-2">Status</th>
               <th className="px-2">Total pembayan</th>
-              <th className="px-2 ">Total uang muka</th>
+              <th className="px-1 md:px-8  ">Total uang muka</th>
               <th className="px-2 ">Sisa pembayaran</th>
               <th className="px-2 py-1">Metode pembayaran</th>
-              <th className=" px-28 border-l  border-blue-20">aktor</th>
+              <th className=" md:px-24 px-40 border-l  border-blue-20">
+                aktor
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -129,10 +131,18 @@ export default function Order() {
             ) : (
               Order.data.map((item, index) => (
                 <tr className="border border-blue-20" key={index}>
-                  <td className="px-2 py-2">{index + 1}</td>
-                  <td className="px-2 py-2">
+                  <td className="px-1 py-2">{index + 1}</td>
+                  <td className="px-1 py-2">
                     {" "}
-                    {format(new Date(item.date), "dd/MM/yyyy")}
+                    {new Date(item.date).toLocaleString("id-ID", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                      timeZoneName: "short",
+                    })}
                   </td>
                   <td>{item.NumberOrder}</td>
                   <td>{item.historyPaket.title}</td>
@@ -168,11 +178,11 @@ export default function Order() {
                     })}
                   </td>
                   <td>{item.MetPembayaran}</td>
-                  <td className="p-2  border-l  border-blue-20">
+                  <td className="p-2 border-l  border-blue-20 ">
                     {item.status ? (
                       <Button
                         className={
-                          "btn bg-green-10/50 border border-green-10 py-1 px-2 hover:outline-green-10 hover:bg-green-10/75 shadow-md"
+                          "btn bg-green-10/50 border border-green-500 py-1 px-3 hover:outline-green-500 hover:bg-green-10/75 shadow-md"
                         }
                         title="sukses"
                         onClick={() => HandleStatusSukses(item._id)}
@@ -187,45 +197,25 @@ export default function Order() {
                     />
                     <Button
                       className={
-                        "btn bg-orange-300 py-1 px-2 border border-orange-500 hover:outline-orange-500 hover:bg-orange-400/90 mr-1  shadow-md "
+                        "btn bg-orange-300 py-1 px-3 border border-orange-500 hover:outline-orange-500 hover:bg-orange-400/90 mr-1  shadow-md "
                       }
                       title="hapus"
                       onClick={() => handleDelete(item._id)}
                     />
                     <Button
                       className={
-                        "btn bg-orange-300 py-1 px-2 border border-orange-500 hover:outline-orange-500 hover:bg-orange-400/90 mr-1 shadow-md"
+                        "btn bg-blue-300 py-1 px-3 border border-blue-500 hover:outline-blue-500 hover:bg-blue-400/90 mr-1 shadow-md"
                       }
-                      title="coba"
+                      title="detail"
                       onClick={() =>
                         HandleCoba({
                           paket: item.paket,
                           jadwal: item.jadwal,
                           penyewa: item.penyewa,
                           _id: item._id,
+                          paymen: item.MetPembayaran,
                         })
                       }
-                    />
-                    <Button
-                      className={
-                        "btn bg-orange-300 py-1 px-2 border border-orange-500 hover:outline-orange-500 hover:bg-orange-400/90 mr-1  shadow-md "
-                      }
-                      title="paket"
-                      onClick={() => handleDelete(item._id)}
-                    />
-                    <Button
-                      className={
-                        "btn bg-orange-300 py-1 px-2 border border-orange-500 hover:outline-orange-500 hover:bg-orange-400/90 mr-1  shadow-md "
-                      }
-                      title="penyewa"
-                      onClick={() => handleDelete(item._id)}
-                    />
-                    <Button
-                      className={
-                        "btn bg-gray-400 py-1 px-2 border border-gray-500 hover:outline-gray-500 hover:bg-gray-400/90 mt-2  shadow-md "
-                      }
-                      title="bukti"
-                      onClick={() => navigate(`/order/bukti/${item._id}`)}
                     />
                   </td>
                 </tr>
@@ -239,7 +229,7 @@ export default function Order() {
         page={Order.page}
         pages={Order.pages}
         setPage={setPage}
-        fetchOrder={fetchOrder}
+        fetch={fetchOrder}
       />
     </main>
   );

@@ -2,7 +2,10 @@ import {
   START_FETCHING_LAPORAN,
   SUCCESS_FETCHING_LAPORAN,
   ERROR_FETCHING_LAPORAN,
-  SET_KEYWORD,
+  SET_START_DATE,
+  SET_END_DATE,
+  SET_LIMIT,
+  SET_PAGE,
 } from "./constants";
 
 const statuslist = {
@@ -15,6 +18,11 @@ const statuslist = {
 const initialState = {
   data: [],
   keyword: "",
+  page: 1,
+  limit: 10,
+  pages: 1,
+  startDate: new Date(),
+  endDate: new Date(),
   status: statuslist.idle,
 };
 
@@ -31,11 +39,27 @@ export default function reducer(state = initialState, action) {
         ...state,
         status: statuslist.success,
         data: action.laporan,
+        pages: action.pages,
       };
-    case SET_KEYWORD:
+    case SET_LIMIT:
       return {
         ...state,
-        keyword: action.keyword,
+        limit: action.limit,
+      };
+    case SET_PAGE:
+      return {
+        ...state,
+        page: action.page,
+      };
+    case SET_START_DATE:
+      return {
+        ...state,
+        startDate: action.startDate,
+      };
+    case SET_END_DATE:
+      return {
+        ...state,
+        endDate: action.endDate,
       };
 
     default:

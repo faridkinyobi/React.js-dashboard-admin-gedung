@@ -46,7 +46,7 @@ export default function Payment() {
     <main className="items-center px-4 lg:px-20 ">
       <Button
         className={
-          "btn bg-slate-300 border border-slate-400 py-3 px-10 hover:outline-slate-500 hover:bg-slate-500/90 shadow "
+          "btn_greey"
         }
         title={"Tambah"}
         onClick={() => navigate("/payment/create")}
