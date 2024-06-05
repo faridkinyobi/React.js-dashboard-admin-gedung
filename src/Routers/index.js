@@ -13,6 +13,7 @@ import { AdminRoute } from "./UserRoute";
 import { PelangganRoute } from "./UserRoute";
 import { PaymentRoute } from "./PaymentRoute";
 import { LaporanRoute } from "./LaporanRoute";
+import { BuktiRoute } from "./BuktiRoute";
 
 function AppRouter() {
   return (
@@ -43,6 +44,7 @@ function AppRouter() {
         <Route path="pelanggan/*" element={<PelangganRoute />} />
         <Route path="payment/*" element={<PaymentRoute />} />
         <Route path="laporan/*" element={<LaporanRoute />} />
+        <Route path="bukti/*" element={<BuktiRoute />} />
         <Route path="" element={<Navigate to="/dashboard" replace={true} />} />
       </Route>
     </Routes>

@@ -1,0 +1,6 @@
+export const START_FETCHING_BUKTI =
+  'redux/Bukti/START_FETCHING_BUKTI';
+export const SUCCESS_FETCHING_BUKTI =
+  'redux/Bukti/SUCCESS_FETCHING_BUKTI';
+export const ERROR_FETCHING_BUKTI =
+  'redux/Bukti/ERROR_FETCHING_BUKTI';

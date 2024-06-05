@@ -16,6 +16,7 @@ import PaymentReducer from "./payment/reducer.js";
 import UserReducer from "./user/reducer.js";
 import LaporanReducer from "./Laporan/reducer.js";
 import CardReducer from "./totalPenyewa/reducer.js";
+import BuktiReducer from "./bukti/reducer.js";
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -30,6 +31,7 @@ const rootReducers = combineReducers({
   User: UserReducer,
   Card: CardReducer,
   Laporan: LaporanReducer,
+  Bukti: BuktiReducer,
 });
 const store = createStore(
   rootReducers,

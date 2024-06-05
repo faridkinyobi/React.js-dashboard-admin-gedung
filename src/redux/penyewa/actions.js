@@ -35,10 +35,7 @@ export const fetchPenyewa= (id,Byid) => {
   return async (dispatch) => {
     dispatch(startFetchingPenyewa());
     try {
-      console.log(Byid,"byID")
-      let res = await debouncedFetchPenyewa(Byid? `/cms/penyewa/${id}`:"/cms/penyewa");
-      console.log(id)
-      console.log(res)
+      const res = await debouncedFetchPenyewa(Byid? `/cms/penyewa/${id}`:"/cms/penyewa");
       dispatch(
         successFetchingPenyewa({
           Penyewa: res.data.data
