@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { fetchBukti } from "../../redux/bukti/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { BsFillTrash3Fill, BsFillPencilFill } from "react-icons/bs";
+import { BsFillTrash3Fill } from "react-icons/bs";
 import { deleteData } from "../../utils/fatch";
 import { config } from "../../config";
 import Button from "../../components/Button";
@@ -10,12 +9,11 @@ import Alert from "../../components/Alert";
 import Thead from "../../components/Thead";
 import Swal from "sweetalert2";
 
-export default function Payment() {
-  const navigate = useNavigate();
+export default function Index() {
   const dispatch = useDispatch();
 
   const result = useSelector((state) => state.Bukti);
-  console.log(result.data);
+
   useEffect(() => {
     dispatch(fetchBukti());
   }, [dispatch]);
@@ -32,7 +30,7 @@ export default function Payment() {
       cancelButtonText: "Batal",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await deleteData(`/cms/payments/${id}`);
+        const res = await deleteData(`/cms/pembayaran/${id}`);
         Alert({
           title: res?.response?.data?.msg ?? "success",
           icon: "success",

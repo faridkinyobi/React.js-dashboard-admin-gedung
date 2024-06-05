@@ -1,32 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Form from "./form";
 import Alert from "../../components/Alert";
 import { useNavigate, useParams } from "react-router-dom";
-import { putData, getData, postData, deleteData } from "../../utils/fatch";
-import Button from "../../components/Button";
-
+import { putData, postData, deleteData } from "../../utils/fatch";
 export default function Edit() {
   // const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { PaymentId } = useParams();
+  const { id } = useParams();
   const [form, setForm] = useState({
-    type: "",
-    Number: "",
-    image: "",
+    BuktiUangMuka: id,
+    BuktiPelunasan: "",
     avatar: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-
-  const fetchOnePenyewa = async () => {
-    const res = await getData(`/cms/payments/${PaymentId}`);
-    setForm({
-      ...form,
-      type: res.data.data.type,
-      image: res.data.data.image._id,
-      Number: res.data.data.Number,
-      avatar: res.data.data.image.name,
-    });
-  };
 
   const handleImage = async (file) => {
     let formData = new FormData();
@@ -43,20 +29,20 @@ export default function Edit() {
         e?.target?.files[0]?.type === "image/jpeg"
       ) {
         let size = parseFloat(e.target.files[0].size / 3145728).toFixed(2);
-        if (size > 0) {
+        if (size > 2.00) {
           Alert({
             title: "Please select image size less than 3 MB",
             icon: "warning",
           });
-          setForm({ ...form, image: "", [e.target.name]: "" });
+          setForm({ ...form, BuktiPelunasan: "", [e.target.name]: "" });
         } else {
-          if (form.image) {
-            await deleteData(`/cms/images/${form.image}`);
+          if (form.BuktiPelunasan) {
+            await deleteData(`/cms/images/${form.BuktiPelunasan}`);
           }
           const res = await handleImage(e.target.files[0]);
           setForm({
             ...form,
-            image: res.data.data._id,
+            BuktiPelunasan: res.data.data._id,
             [e.target.name]: res.data.data.name,
           });
         }
@@ -65,28 +51,24 @@ export default function Edit() {
           title: "type image png | jpg | jpeg",
           icon: "warning",
         });
-        setForm({ ...form, image: "", [e.target.name]: "" });
+        setForm({ ...form, BuktiPelunasan: "", [e.target.name]: "" });
       }
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
     }
   };
 
-  useEffect(() => {
-    fetchOnePenyewa();
-  }, []);
-
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    const res = await putData(`/cms/payments/${PaymentId}`, form);
+    const res = await putData(`/cms/pembayaran/${id}`, form);
     if (res?.data?.data) {
       Alert({
         title: "success",
         icon: "success",
       });
       setIsLoading(false);
-      navigate("/payment");
+      navigate("/order");
     } else {
       setIsLoading(false);
       Alert({

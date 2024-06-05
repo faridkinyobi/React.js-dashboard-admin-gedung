@@ -35,7 +35,7 @@ export const fetchBukti= (id,ById) => {
     dispatch(startFetchingBukti());
 
     try {
-      const res = await debouncedFetchBukti(ById?`/cms/pembayaran${id}`:"/cms/pembayaran");
+      const res = await debouncedFetchBukti(ById?`/cms/pembayaran/${id}`:"/cms/pembayaran");
       dispatch(
         successFetchingBukti({
           Bukti: res.data.data

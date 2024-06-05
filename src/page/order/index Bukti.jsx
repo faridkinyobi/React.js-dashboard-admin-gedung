@@ -1,43 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { BsFillTrash3Fill, BsFillPencilFill } from "react-icons/bs";
-import { getData, putData, deleteData } from "../../utils/fatch";
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { putData, deleteData } from "../../utils/fatch";
 import Button from "../../components/Button";
 import Swal from "sweetalert2";
 import Thead from "../../components/Thead";
 import Alert from "../../components/Alert";
 import { config } from "../../config";
-import { format, isValid } from "date-fns";
-import { fetchPenyewa } from "../../redux/penyewa/actions";
+// import { format, isValid } from "date-fns";
+// import { fetchPenyewa } from "../../redux/penyewa/actions";
 import { fetchPaket } from "../../redux/paket/actions";
 import { fetchJadwal } from "../../redux/jadwal/actions";
+import { fetchBukti } from "../../redux/bukti/actions";
 export default function Order() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const hasFetched = useRef(false); // loop yang tak diinginkan
   const { id } = useParams();
-  const [Img, setImgBuk] = useState([]);
   const { paket, jadwal, penyewa, paymen } = location.state || {};
   // const DatePenyewa = useSelector((state) => state.Penyewa);
   const Datapekets = useSelector((state) => state.Paket);
   const DataJadwal = useSelector((state) => state.Jadwal);
-  // console.log(DataJadwal?.data.kegiatan);
-  // console.log(paket, jadwal, penyewa, id,"bukti");
-
-  const fetchOneBukti = async () => {
-    if (paymen === "transfer") {
-      const res = await getData(`/cms/pembayaran/${id}`);
-      setImgBuk(res.data?.data);
-    }
-  };
+  const DataPembayaran = useSelector((state) => state.Bukti);
 
   useEffect(() => {
-    // dispatch(fetchPenyewa(penyewa, true));
-    dispatch(fetchPaket(paket, true));
-    dispatch(fetchJadwal(jadwal, true));
-    fetchOneBukti();
-  }, [dispatch, DataJadwal?.data?._id, DataJadwal?.data?.status_kegiatan]);
+    if (!hasFetched.current) {
+      // dispatch(fetchPenyewa(penyewa, true));
+      dispatch(fetchBukti(id, true));
+      dispatch(fetchPaket(paket, true));
+      dispatch(fetchJadwal(jadwal, true));
+      hasFetched.current = true;
+    }
+  }, [dispatch]);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -72,10 +68,10 @@ export default function Order() {
     dispatch(fetchJadwal()); // Re-fetch data after status change
   };
 
-  const formatDate = (date) => {
-    const parsedDate = new Date(date);
-    return isValid(parsedDate) ? format(parsedDate, "dd/MM/yyyy h:i") : "-";
-  };
+  // const formatDate = (date) => {
+  //   const parsedDate = new Date(date);
+  //   return isValid(parsedDate) ? format(parsedDate, "dd/MM/yyyy h:i") : "-";
+  // };
   return (
     <main className="items-center px-4 lg:px-20 ">
       <Button
@@ -85,22 +81,36 @@ export default function Order() {
         title={"back"}
         onClick={() => navigate("/Order")}
       />
+      {!DataPembayaran?.data?.BuktiUangMuka?.name? (
+        <Button
+          className={
+            "btn bg-slate-400 py-3 px-10 hover:outline-slate-500 hover:bg-slate-10/90 "
+          }
+          title={"Bukti Uang muka"}
+          onClick={() => navigate(`/bukti/create/${id}`)}
+        />
+      ):("")}
+
       {/* start Map Bukti Pembayaran */}
-      {paymen === "transfer" && (
-        <div className="overflow-x-scroll md:overflow-hidden flex-row">
-          <h1 className=" my-2">Bukti Nota pembayaran</h1>
-          <table className="text-left text-white-10 w-full">
-            <Thead
-              text={["Bukti Pembayaran Uang muka", " Bukti Pelunasan", "aktor"]}
-              className={"px-8 py-2"}
-            />
-            <tbody>
+      <div className="overflow-x-scroll md:overflow-hidden flex-row">
+        <h1 className=" my-2">Bukti Nota pembayaran</h1>
+        <table className="text-left text-white-10 w-full">
+          <Thead
+            text={["Bukti Pembayaran Uang muka", " Bukti Pelunasan", "aktor"]}
+            className={"px-8 py-2"}
+          />
+          <tbody>
+            {DataPembayaran === "process" ? (
+              <tr>
+                <td colSpan="4">Loading...</td>
+              </tr>
+            ) : (
               <tr className="border border-blue-20">
                 <td className="px-8 py-2 ">
                   <img
                     width={100}
                     height={100}
-                    src={`${config.api_image}/${Img?.BuktiUangMuka?.name}`}
+                    src={`${config.api_image}/${DataPembayaran?.data?.BuktiUangMuka?.name}`}
                     alt="50x50"
                   />
                 </td>
@@ -108,15 +118,28 @@ export default function Order() {
                   <img
                     width={100}
                     height={100}
-                    src={`${config.api_image}/${Img?.BuktiPelunasan?.name}`}
+                    src={`${config.api_image}/${DataPembayaran?.data?.BuktiPelunasan?.name}`}
                     alt="50x50"
                   />
                 </td>
+                <td>
+                  {DataPembayaran?.data?.status == true && (
+                    <Button
+                      className={
+                        "btn bg-slate-400 py-3 px-10 hover:outline-slate-500 hover:bg-slate-10/90 "
+                      }
+                      title={"Bukti Pelunasan"}
+                      onClick={() =>
+                        navigate(`/bukti/edit/${DataPembayaran.data._id}`)
+                      }
+                    />
+                  )}
+                </td>
               </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
+            )}
+          </tbody>
+        </table>
+      </div>
       {/* end Bukti Pembayaran */}
 
       {/* start Map  Paket */}
@@ -161,6 +184,7 @@ export default function Order() {
       </div>
       {/* end Map  Paket */}
 
+      {/* start Jadwal */}
       <div className="my-5 overflow-x-scroll md:overflow-hidden">
         <table className=" text-center text-blue-40  w-full">
           <Thead
@@ -182,8 +206,26 @@ export default function Order() {
               </tr>
             ) : (
               <tr className=" border border-blue-20">
-                <td>{formatDate(DataJadwal?.data?.tgl_mulai)}</td>
-                <td>{formatDate(DataJadwal?.data?.tgl_akhir)}</td>
+                <td>
+                  {new Date(DataJadwal?.data?.tgl_mulai).toLocaleString(
+                    "id-ID",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}{" "}
+                </td>
+                <td>
+                  {new Date(DataJadwal?.data?.tgl_akhir).toLocaleString(
+                    "id-ID",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}{" "}
+                </td>
                 <td>{DataJadwal?.data?.waktu}</td>
                 <td>{DataJadwal?.data?.lama_sewa} hari</td>
                 <td>{DataJadwal?.data?.kegiatan}</td>
@@ -242,6 +284,7 @@ export default function Order() {
           </tbody>
         </table>
       </div>
+      {/* end Jadwal */}
     </main>
   );
 }

@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import Form from "./form";
 import Alert from "../../components/Alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams,  } from "react-router-dom";
 import { deleteData, postData } from "../../utils/fatch";
 export default function Create() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    IdOrder: "",
+    Order: id,
     BuktiUangMuka: "",
     avatar: "",
   });
-console.log(form)
+
   const [isLoading, setIsLoading] = useState(false);
 
   const handleImage = async (file) => {
@@ -28,7 +29,7 @@ console.log(form)
         e?.target?.files[0]?.type === "image/jpeg"
       ) {
         let size = parseFloat(e.target.files[0].size / 3145728).toFixed(2);
-        if (size > 3.00) {
+        if (size > 2.00) {
           Alert({
             title: "Please select image size less than 3 MB",
             icon: "warning",
@@ -64,7 +65,7 @@ console.log(form)
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    const res = await postData(`/app/v1/cms/pembayaran`, form);
+    const res = await postData(`/cms/pembayaran`, form);
     if (res?.data?.data) {
       Alert({
         title: res?.response?.data?.msg ?? "success",

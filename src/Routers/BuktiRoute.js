@@ -8,8 +8,8 @@ export function BuktiRoute() {
   return (
     <Routes>
       <Route path="/" element={<Bukti />} />
-      <Route path="/create" element={<Create />} />
-      <Route path="/edit/:BuktiId" element={<Edit />} />
+      <Route path="/create/:id" element={<Create />} />
+      <Route path="/edit/:id" element={<Edit />} />
     </Routes>
   );
 }
