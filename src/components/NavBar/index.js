@@ -13,6 +13,7 @@ import {
   accessPenyewa,
   accessHome,
   accessAdmin,
+  accessBukti
 } from "../../const/access";
 // import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -47,6 +48,11 @@ const navitem = [
     titel: "payment",
     url: "/payment",
     roles: accessPayments.lihat,
+  },
+  {
+    titel: "Bukti",
+    url: "/bukti",
+    roles: accessBukti.lihat,
   },
   {
     titel: "laporan",
