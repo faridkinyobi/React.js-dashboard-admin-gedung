@@ -9,7 +9,7 @@ import Button from "../../components/Button";
 import Alert from "../../components/Alert";
 import Thead from "../../components/Thead";
 import Swal from "sweetalert2";
-
+import { formatDate } from "../../utils/formatDate";
 export default function Jadwal() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -94,12 +94,8 @@ export default function Jadwal() {
                       timeZoneName: "short",
                     })}
                   </td>
-                  <td>{format(new Date(item.tgl_mulai), "dd/MM/yyyy")}</td>
-                  <td>
-                    {item.tgl_akhir
-                      ? format(new Date(item.tgl_akhir), "dd/MM/yyyy")
-                      : "-"}
-                  </td>
+                  <td>{formatDate(item.tgl_mulai)}</td>
+                  <td>{item.tgl_akhir ? formatDate(item.tgl_akhir) : "-"}</td>
                   <td>{item.waktu}</td>
                   <td>{item.lama_sewa} hari</td>
                   <td>{item.kegiatan}</td>
