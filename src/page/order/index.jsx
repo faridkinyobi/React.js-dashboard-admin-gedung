@@ -8,7 +8,7 @@ import Input from "../../components/TextInput/Index";
 import Alert from "../../components/Alert";
 // import Swalfire from "../../components/Swal";
 import Swal from "sweetalert2";
-
+import { formatHarga } from "../../utils/formatHarga";
 import {
   fetchOrder,
   UpdateOrderStatus,
@@ -53,9 +53,9 @@ export default function Order() {
   };
 
   const HandleCoba = (ids) => {
-    const { paket, jadwal, penyewa, _id, paymen,harga } = ids;
+    const { paket, jadwal, penyewa, _id, paymen, harga } = ids;
     navigate(`/order/bukti/${_id}`, {
-      state: { paket, jadwal, penyewa, paymen,harga },
+      state: { paket, jadwal, penyewa, paymen, harga },
     });
   };
 
@@ -148,7 +148,7 @@ export default function Order() {
                   <td>
                     <p
                       className={`py-1 px-1 mx-2 border  rounded-2xl ${
-                        item.status === "pending" ||  item.status === "uang muka"
+                        item.status === "pending" || item.status === "uang muka"
                           ? "bg-yellow-300/45 border-yellow-300"
                           : item.status === "sukses"
                           ? "bg-lime-600/45 border-lime-600"
@@ -158,24 +158,9 @@ export default function Order() {
                       {item.status}
                     </p>
                   </td>
-                  <td>
-                    {item.total.toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })}
-                  </td>
-                  <td className="px-5">
-                    {item.total_dp.toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })}
-                  </td>
-                  <td>
-                    {item.sisa_pembayaran.toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })}
-                  </td>
+                  <td>{formatHarga(item.total)}</td>
+                  <td className="px-5">{formatHarga(item.total_dp)}</td>
+                  <td>{formatHarga(item.sisa_pembayaran)}</td>
                   <td>{item.MetPembayaran}</td>
                   <td className="p-2 border-l  border-blue-20 ">
                     {item.status ? (
@@ -213,7 +198,7 @@ export default function Order() {
                           penyewa: item.penyewa,
                           _id: item._id,
                           paymen: item.MetPembayaran,
-                          harga: item.historyPaket.hargadetail
+                          harga: item.historyPaket.hargadetail,
                         })
                       }
                     />
