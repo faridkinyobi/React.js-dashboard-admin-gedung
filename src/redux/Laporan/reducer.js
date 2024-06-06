@@ -24,6 +24,9 @@ const initialState = {
   startDate: new Date(),
   endDate: new Date(),
   status: statuslist.idle,
+  totalDebit: 0,
+  totalKredit: 0,
+  saldo: 0,
 };
 
 export default function reducer(state = initialState, action) {
@@ -40,6 +43,9 @@ export default function reducer(state = initialState, action) {
         status: statuslist.success,
         data: action.laporan,
         pages: action.pages,
+        totalDebit: action.totalDebit,
+        totalKredit: action.totalKredit,
+        saldo:action.saldo,
       };
     case SET_LIMIT:
       return {

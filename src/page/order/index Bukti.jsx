@@ -7,27 +7,27 @@ import Button from "../../components/Button";
 import Swal from "sweetalert2";
 import Thead from "../../components/Thead";
 import Alert from "../../components/Alert";
+import { fetchPenyewa } from "../../redux/penyewa/actions";
 import { config } from "../../config";
-// import { format, isValid } from "date-fns";
-// import { fetchPenyewa } from "../../redux/penyewa/actions";
 import { fetchPaket } from "../../redux/paket/actions";
 import { fetchJadwal } from "../../redux/jadwal/actions";
 import { fetchBukti } from "../../redux/bukti/actions";
+import { fetchOrder, UpdateOrderStatus } from "../../redux/order/actions";
+
 export default function Order() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const hasFetched = useRef(false); // loop yang tak diinginkan
   const { id } = useParams();
-  const { paket, jadwal, penyewa, paymen } = location.state || {};
-  // const DatePenyewa = useSelector((state) => state.Penyewa);
+  const { paket, jadwal, penyewa, paymen, harga } = location.state || {};
+  const DatePenyewa = useSelector((state) => state.Penyewa);
   const Datapekets = useSelector((state) => state.Paket);
   const DataJadwal = useSelector((state) => state.Jadwal);
   const DataPembayaran = useSelector((state) => state.Bukti);
-
   useEffect(() => {
     if (!hasFetched.current) {
-      // dispatch(fetchPenyewa(penyewa, true));
+      dispatch(fetchPenyewa(penyewa, true));
       dispatch(fetchBukti(id, true));
       dispatch(fetchPaket(paket, true));
       dispatch(fetchJadwal(jadwal, true));
@@ -68,10 +68,12 @@ export default function Order() {
     dispatch(fetchJadwal()); // Re-fetch data after status change
   };
 
-  // const formatDate = (date) => {
-  //   const parsedDate = new Date(date);
-  //   return isValid(parsedDate) ? format(parsedDate, "dd/MM/yyyy h:i") : "-";
-  // };
+  const HandleStatusDP = async (id) => {
+    dispatch(UpdateOrderStatus(id, false, true));
+    dispatch(fetchOrder());
+    navigate("/order");
+  };
+
   return (
     <main className="items-center px-4 lg:px-20 ">
       <Button
@@ -81,7 +83,8 @@ export default function Order() {
         title={"back"}
         onClick={() => navigate("/Order")}
       />
-      {!DataPembayaran?.data?.BuktiUangMuka?.name? (
+      {!DataPembayaran?.data?.BuktiUangMuka?.name &&
+      paymen === "Cash On Delivery" ? (
         <Button
           className={
             "btn bg-slate-400 py-3 px-10 hover:outline-slate-500 hover:bg-slate-10/90 "
@@ -89,7 +92,9 @@ export default function Order() {
           title={"Bukti Uang muka"}
           onClick={() => navigate(`/bukti/create/${id}`)}
         />
-      ):("")}
+      ) : (
+        ""
+      )}
 
       {/* start Map Bukti Pembayaran */}
       <div className="overflow-x-scroll md:overflow-hidden flex-row">
@@ -123,17 +128,25 @@ export default function Order() {
                   />
                 </td>
                 <td>
-                  {DataPembayaran?.data?.status == true && (
-                    <Button
-                      className={
-                        "btn bg-slate-400 py-3 px-10 hover:outline-slate-500 hover:bg-slate-10/90 "
-                      }
-                      title={"Bukti Pelunasan"}
-                      onClick={() =>
-                        navigate(`/bukti/edit/${DataPembayaran.data._id}`)
-                      }
-                    />
-                  )}
+                  {DataPembayaran?.data?.status === true &&
+                    paymen === "Cash On Delivery" && (
+                      <Button
+                        className={
+                          "btn bg-slate-400 py-1 px-3 border border-slate-500 hover:outline-slate-500 hover:bg-slate-400/90 mx-1  shadow-md  "
+                        }
+                        title={"Bukti Pelunasan"}
+                        onClick={() =>
+                          navigate(`/bukti/edit/${DataPembayaran.data._id}`)
+                        }
+                      />
+                    )}
+                  <Button
+                    className={
+                      "btn bg-yellow-300 py-1 px-3 border border-yellow-500 hover:outline-yellow-500 hover:bg-yellow-400/90 mx-1  shadow-md "
+                    }
+                    title="Uang Dp"
+                    onClick={() => HandleStatusDP(id)}
+                  />
                 </td>
               </tr>
             )}
@@ -164,7 +177,11 @@ export default function Order() {
               <td className="p-1">
                 {Datapekets?.data?.harga?.map((hargaItem, hargaIndex) => (
                   <div
-                    className="flex  border-2 my-1 w-[27rem] p-1 text-left"
+                    className={`flex  border-2 my-1 w-[27rem] p-1 text-left ${
+                      harga === hargaItem.hargadetail
+                        ? " border-teal-400 from-blue-500 to-green-500"
+                        : ""
+                    }`}
                     key={hargaIndex}
                   >
                     <div className="mx-8">
@@ -186,6 +203,7 @@ export default function Order() {
 
       {/* start Jadwal */}
       <div className="my-5 overflow-x-scroll md:overflow-hidden">
+      <h1 className=" my-4">Jadwal</h1>
         <table className=" text-center text-blue-40  w-full">
           <Thead
             text={[
@@ -285,6 +303,31 @@ export default function Order() {
         </table>
       </div>
       {/* end Jadwal */}
+
+      <div className="mt-3 mb-2 overflow-x-scroll md:overflow-hidden">
+      <h1 className=" my-4">Penyewa</h1>
+        <table className=" text-center text-blue-20 w-full">
+          <Thead
+            text={[ "Nama", "Email", "Alamat", "Nomer telepon"]}
+            className={"px-8 py-2"}
+          />
+
+          <tbody>
+            {DatePenyewa.status === "process" ? (
+              <tr>
+                <td colSpan="4">Loading...</td>
+              </tr>
+            ) : (
+              <tr className="border border-blue-20">
+                <td className="px-1">{DatePenyewa?.data?.name}</td>
+                <td className="px-1">{DatePenyewa?.data?.email}</td>
+                <td className="px-1">{DatePenyewa?.data?.alamat}</td>
+                <td className="px-1">{DatePenyewa?.data?.no_tlp}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </main>
   );
 }

@@ -9,7 +9,7 @@ import {
 } from "./constants";
 
 import { getData } from "../../utils/fatch";
-import moment from 'moment';
+import moment from "moment";
 import debounce from "debounce-promise";
 // import { clearNotif } from '../notif/actions';
 
@@ -23,11 +23,20 @@ export const startFetchingLaporan = () => {
 };
 
 // SUCCESS
-export const successFetchingLaporan = ({ laporan,pages }) => {
+export const successFetchingLaporan = ({
+  laporan,
+  pages,
+  totalDebit,
+  totalKredit,
+  saldo,
+}) => {
   return {
     type: SUCCESS_FETCHING_LAPORAN,
     laporan,
-    pages
+    pages,
+    totalDebit,
+    totalKredit,
+    saldo,
   };
 };
 
@@ -39,21 +48,24 @@ export const errorFetchingLaporan = () => {
 };
 
 export const fetchLaporan = () => {
-  return async (dispatch ,getState) => {
+  return async (dispatch, getState) => {
     dispatch(startFetchingLaporan());
 
     try {
       let params = {
         page: getState().Laporan?.page || 1,
         limit: getState().Laporan?.limit || 10,
-        startDate: moment(getState().Laporan?.startDate).format('YYYY-MM-DD'),
-        endDate: moment(getState().Laporan?.endDate).format('YYYY-MM-DD'),
+        startDate: moment(getState().Laporan?.startDate).format("YYYY-MM-DD"),
+        endDate: moment(getState().Laporan?.endDate).format("YYYY-MM-DD"),
       };
-      let res = await debouncedFetchLaporan("/cms/laporan",params);
+      const res = await debouncedFetchLaporan("/cms/laporan", params);
       dispatch(
         successFetchingLaporan({
           laporan: res.data.data.data,
-          pages: res.data.data.pages
+          pages: res.data.data.pages,
+          totalDebit: res.data.data.totalDebit,
+          totalKredit: res.data.data.totalKredit,
+          saldo: res.data.data.saldo,
         })
       );
     } catch (error) {
@@ -70,7 +82,6 @@ export const setLimit = (limit) => ({
   type: SET_LIMIT,
   limit,
 });
-
 
 export const setEndDate = (endDate) => {
   return {

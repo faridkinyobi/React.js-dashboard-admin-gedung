@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteData } from "../../utils/fatch";
-import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import CustomPagination from "../../components/Custom_Pagination";
 import Button from "../../components/Button";
@@ -54,9 +53,9 @@ export default function Order() {
   };
 
   const HandleCoba = (ids) => {
-    const { paket, jadwal, penyewa, _id, paymen } = ids;
+    const { paket, jadwal, penyewa, _id, paymen,harga } = ids;
     navigate(`/order/bukti/${_id}`, {
-      state: { paket, jadwal, penyewa, paymen },
+      state: { paket, jadwal, penyewa, paymen,harga },
     });
   };
 
@@ -149,7 +148,7 @@ export default function Order() {
                   <td>
                     <p
                       className={`py-1 px-1 mx-2 border  rounded-2xl ${
-                        item.status === "pending"
+                        item.status === "pending" ||  item.status === "uang muka"
                           ? "bg-yellow-300/45 border-yellow-300"
                           : item.status === "sukses"
                           ? "bg-lime-600/45 border-lime-600"
@@ -214,6 +213,7 @@ export default function Order() {
                           penyewa: item.penyewa,
                           _id: item._id,
                           paymen: item.MetPembayaran,
+                          harga: item.historyPaket.hargadetail
                         })
                       }
                     />

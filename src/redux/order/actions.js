@@ -66,13 +66,13 @@ export const errorUpdateOrderStatus = () => {
 //end
 
 //Update Status Order
-export const UpdateOrderStatus = (id, gagal) => {
+export const UpdateOrderStatus = (id, gagal,dp) => {
   return async (dispatch) => {
     dispatch(startUpdateOrderStatus());
 
     try {
       await debouncedUpdateStatus(
-        `${gagal ? `/cms/statusGagal/${id}` : `/cms/statusSukses/${id}`}`
+        `${gagal ? `/cms/statusGagal/${id}` : dp? `/cms/statusDp/${id}`: `/cms/statusSukses/${id}`}`
       );
       dispatch(
         successUpdateOrderStatus({

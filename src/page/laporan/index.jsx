@@ -12,7 +12,8 @@ import {
   setEndDate,
   setStartDate,
 } from "../../redux/Laporan/actions";
-import { format } from "date-fns";
+import { formatHarga } from "../../utils/formatHarga";
+import { formatDate } from "../../utils/formatDate";
 
 export default function Index() {
   const dispatch = useDispatch();
@@ -39,24 +40,6 @@ export default function Index() {
     dispatch(setEndDate(e.target.value));
     dispatch(fetchLaporan());
   };
-
-  const totalDebit =
-    laporan.data.length > 0
-      ? laporan.data.reduce((index, items) => index + (items.pemasukan || 0), 0)
-      : 0;
-
-  const totalKredit =
-    laporan.data.length > 0
-      ? laporan.data.reduce(
-          (index, items) => index + (items.pengeluaran || 0),
-          0
-        )
-      : 0;
-  // const totalSaldo =
-  //   laporan.data.length > 0
-  //     ? laporan.data.reduce((index, items) => index - (items.Saldo || 0), 0)
-  //     : 0;
-  const totalSaldo = totalDebit - totalKredit;
   return (
     <div className="items-center px-4 lg:px-20 text-blue-40">
       <div className=" flex flex-wrap justify-between items-center">
@@ -118,61 +101,43 @@ export default function Index() {
               laporan.data.map((items, index) => (
                 <tr className="border border-blue-20" key={index}>
                   <td className="px-2 py-2">{index + 1}</td>
-                  <td className="px-2 py-2">
+                  {/* <td className="px-2 py-2">
                     {" "}
                     {new Date(items.date).toLocaleString("id-ID", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
+                  </td> */}
+                  <td className="px-2 py-2">
+                    
+                    {formatDate(items.date)}
                   </td>
                   <td>{items.petugas}</td>
                   <td>{items.desc}</td>
-                  <td>
-                    {items.pemasukan?.toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })}
+                  <td className="text-left">{formatHarga(items.pemasukan)}</td>
+                  <td className="text-left">
+                    {formatHarga(items.pengeluaran)}
                   </td>
-                  <td>
-                    {items.pengeluaran?.toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })}
-                  </td>
-                  <td>
-                    {items.Saldo?.toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })}
-                  </td>
+                  <td className="text-left">{formatHarga(items.Saldo)}</td>
                 </tr>
               ))
             )}
           </tbody>
           <tfoot>
             <tr>
-              <td className="px-2 py-2 font-bold">Total</td>
+              <td className="px-1 py-2 font-bold">Total</td>
               <td></td>
               <td></td>
               <td></td>
-              <td className="px-2 py-2 font-bold">
-                {totalDebit?.toLocaleString("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                })}
+              <td className="px-2 py-2 font-bold text-left">
+                {formatHarga(laporan.totalDebit)}
               </td>
-              <td className="px-2 py-2 font-bold">
-                {totalKredit?.toLocaleString("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                })}
+              <td className="px-2 py-2 font-bold text-left">
+                {formatHarga(laporan.totalKredit)}
               </td>
-              <td className=" py-2 font-bold">
-                {totalSaldo?.toLocaleString("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                })}
+              <td className=" py-2 font-bold text-left">
+                {formatHarga(laporan.saldo)}
               </td>
             </tr>
           </tfoot>
