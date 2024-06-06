@@ -10,6 +10,7 @@ import Alert from "../../components/Alert";
 import { accessPaket } from "../../const/access";
 // import Swalfire from "../../components/Swal";
 import Swal from "sweetalert2";
+import { formatHarga } from "../../utils/formatHarga";
 export default function Paket() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -67,9 +68,7 @@ export default function Paket() {
     <main className="px-4 lg:px-20">
       {access.tambah && (
         <Button
-          className={
-            "btn_greey"
-          }
+          className={"btn_greey"}
           title={"Tambah"}
           onClick={() => navigate("/paket/create")}
         />
@@ -104,10 +103,7 @@ export default function Paket() {
                       warga: {hargaItem.warga}
                       <br />
                       harga:
-                      {hargaItem.hargadetail.toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      })}
+                      {formatHarga(hargaItem.hargadetail)}
                     </div>
                   ))}
                 </td>
