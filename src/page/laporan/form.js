@@ -13,6 +13,7 @@ export default function Form({
     <form>
       <InputRp
         prefix={"Rp "}
+        placeholder="RP"
         label="pengeluaran"
         name="pengeluaran"
         value={form.pengeluaran}
