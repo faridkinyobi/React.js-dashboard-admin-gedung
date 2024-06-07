@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import Button from "../Button/index";
 import Link from "../NavLink/index";
-import img from "../../logo2.png"
+import img from "../../logo2.png";
 import {
   accessJadwal,
   accessPelanggan,
@@ -13,7 +13,7 @@ import {
   accessPenyewa,
   accessHome,
   accessAdmin,
-  accessBukti
+  accessBukti,
 } from "../../const/access";
 // import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -97,22 +97,22 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="w-full  md:py-2 bg-blue-30 mb-8 drop-shadow-md">
+    <nav className="w-full  lg:py-2 bg-blue-30 mb-8 drop-shadow-md">
       <div className=" padding-container flexBetween ">
         <img src={img} alt="Logo" width={140} height={100} />
         <div
-          className={`lg:gap-1  md:flex ms:flex px-2  absolute md:static  w-full md:w-auto left-0 top-20  translate-all ease-in-out duration-700
+          className={`pb-4 lg:gap-1  lg:flex px-2  absolute lg:static  w-full lg:w-auto left-0 top-20  translate-all ease-in-out duration-700
            ${
              clicked ? "left-[-100rem]" : ""
-           }  bg-slate-950/80 md:bg-transparent`}
+           }  bg-slate-950/80 lg:bg-transparent `}
         >
           {navitem.map((item, index) => (
-            <ul className=" list-none lg:my-auto md:mr-3 my-2" key={index} >
+            <ul className=" list-none lg:my-auto lg:mr-3 my-2" key={index}>
               <Link
                 onMouseEnter={
                   item.titel === "user" ? hendelDropdown : undefined
                 }
-                className="text-xl font-medium mx-5 md:mx-1 text-gray-10 hover:text-white-20/90"
+                className="text-2xl lg:text-xl font-medium mx-5 lg:mx-1 text-gray-10 hover:text-white-20/90"
                 role={role}
                 roles={item.roles}
                 href={item.url}
@@ -122,13 +122,13 @@ export default function NavBar() {
             </ul>
           ))}
           {isOpen && (
-            <ul className=" text-gray-10 hover:text-white-20/90 dropdown-menu transition-transform delay-700 origin-top-right absolute lg:left-[62rem] md:left-10 left-3 md:mt-[3rem] mt-[19rem] text-xl w-36   bg-blue-40 rounded-md px-3 py-2">
+            <ul className=" text-gray-10 hover:text-white-20/90 dropdown-menu transition-transform delay-700 origin-top-right lg:absolute lg:left-[58rem]  lg:mt-[3rem] text-xl w-36   bg-blue-40 rounded-md px-3 py-2 mb-1 ml-7">
               <li className="my-1 py-1 pl-2 hover:bg-gray-10/30 hover:rounded-lg ">
                 <Link
                   className="text-xl "
                   role={role}
                   roles={accessPelanggan.lihat}
-                  href={"pelanggan"}
+                  href={"/pelanggan"}
                 >
                   {"pelanggan"}
                 </Link>
@@ -138,7 +138,7 @@ export default function NavBar() {
                   className="text-xl "
                   role={role}
                   roles={accessAdmin.lihat}
-                  href={"admin"}
+                  href={"/admin"}
                 >
                   {"admin"}
                 </Link>
@@ -146,8 +146,7 @@ export default function NavBar() {
             </ul>
           )}
           <Button
-            className={`btn_blue font-semibold rounded-full text-base border-0 ml-10
-           
+            className={`btn_blue font-semibold rounded-full text-base border-0 ml-10 
           `}
             type="button"
             title="log out"
@@ -155,7 +154,7 @@ export default function NavBar() {
           />
         </div>
         <div
-          className="absolute top-0 right-0 m-5 p-1 rounded-xl border-2 border-gray-10 md:hidden ms:hidden active:border-white-10 mr-7"
+          className="absolute top-0 right-0 m-5 p-1 rounded-xl border-2 border-gray-10 lg:hidden ms:hidden active:border-white-10 mr-7"
           onClick={handleClick}
         >
           {clicked ? (

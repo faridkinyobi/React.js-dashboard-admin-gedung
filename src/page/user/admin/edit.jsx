@@ -5,16 +5,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { putData, getData } from "../../../utils/fatch";
 
 export default function Edit() {
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { PenyewaId } = useParams();
+  const { Id } = useParams();
   const [form, setForm] = useState({
     name: "",
     email: "",
     role: "",
-    confirmPassword:""
   });
-
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,31 +19,31 @@ export default function Edit() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // const fetchOnePenyewa = async () => {
-  //   const res = await getData(`/cms/admin/${PenyewaId}`);
-  //   setForm({
-  //     ...form,
-  //     name: res.data.data.name,
-  //     email: res.data.data.email,
-  //     alamat: res.data.data.alamat,
-  //     no_tlp: res.data.data.no_tlp
-  //   });
-  // };
+  const fetchOneAdmin = async () => {
+    const res = await getData(`/cms/getaOnedmin/${Id}`);
+    if (res.data && res.data.data) {
+      setForm({
+        name: res.data.data[0].name,
+        email: res.data.data[0].email,
+        role: res.data.data[0].role,
+      });
+    }
+  };
 
   useEffect(() => {
-    // fetchOnePenyewa();
+    fetchOneAdmin();
   }, []);
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    const res = await putData(`/cms/admin/${PenyewaId}`, form);
+    const res = await putData(`/cms/UpdateAdmin/${Id}`, form);
     if (res?.data?.data) {
       Alert({
         title: "success",
         icon: "success",
       });
       setIsLoading(false);
-      navigate("/penyewa");
+      navigate("/admin");
     } else {
       setIsLoading(false);
       Alert({
@@ -59,25 +56,15 @@ export default function Edit() {
     }
   };
   return (
-    <main className="bg-blue-30 md:h-[20rem] h-[28rem]">
-      <div className="container flex items-center justify-center">
-        <div className="bg-white-20 md:ml-40 rounded-2xl mt-10 sm:mt-[9rem] lg:mt-[2rem]">
-          <div className="m-10">
-            <Form
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-              edit
-            />
-            {/* <FormSignin
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-            /> */}
-          </div>
-        </div>
+    <main className="container flex items-center justify-center  md:mt-[-4rem]">
+      <div className="bg-white-20 md:ml-40 rounded-2xl mt-1 md:mt-[3rem] p-7 shadow-xl ">
+        <Form
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          form={form}
+          isLoading={isLoading}
+          edit
+        />
       </div>
     </main>
   );

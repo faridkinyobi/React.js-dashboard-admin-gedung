@@ -6,7 +6,7 @@ export default function Form({
   handleSubmit,
   handleChange,
   isLoading,
-  edit
+  edit,
 }) {
   return (
     <form>
@@ -34,23 +34,30 @@ export default function Form({
         onChange={handleChange}
         value={form.role}
       />
-      <Input
-        name="password"
-        type="password"
-        placeholder="password"
-        label="password"
-        onChange={handleChange}
-        value={form.password}
-      />
-      <Input
-        name="confirmPassword"
-        type="password"
-        placeholder="confirm Password"
-        label="confirm Password"
-        onChange={handleChange}
-        value={form.confirmPassword}
-      />
-     
+      {edit ? (
+        ""
+      ) : (
+        <Input
+          name="password"
+          type="password"
+          placeholder="password"
+          label="password"
+          onChange={handleChange}
+          value={form.password}
+        />
+      )}
+      {edit ? (
+        ""
+      ) : (
+        <Input
+          name="confirmPassword"
+          type="password"
+          placeholder="confirm Password"
+          label="confirm Password"
+          onChange={handleChange}
+          value={form.confirmPassword}
+        />
+      )}
       <Button
         className={`btn mt-5 py-3  border-0 w-full lg:w-full block  hover:outline-green-10 hover:bg-green-10/90 ${
           isLoading ? "bg-gray-10" : "bg-green-10"
