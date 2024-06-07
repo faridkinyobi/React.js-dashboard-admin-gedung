@@ -60,18 +60,16 @@ export default function Create() {
       });
     }
   };
-  
+
   return (
-    <main className="container flex items-center justify-center mt-[-2rem]">
-      <div className="bg-white-20 md:ml-40 rounded-2xl mt-5 md:mt-[3rem] p-2 ">
-        <div className="m-7">
-          <Form
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            form={form}
-            isLoading={isLoading}
-          />
-        </div>
+    <main className="container flex items-center justify-center  md:mt-[-4rem]">
+      <div className="bg-white-20 md:ml-40 rounded-2xl mt-1 md:mt-[3rem] p-7 shadow-xl ">
+        <Form
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          form={form}
+          isLoading={isLoading}
+        />
       </div>
     </main>
   );

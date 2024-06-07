@@ -12,7 +12,7 @@ export default function Edit() {
     name: "",
     email: "",
     alamat: "",
-    no_tlp:"",
+    no_tlp: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ export default function Edit() {
       name: res.data.data.name,
       email: res.data.data.email,
       alamat: res.data.data.alamat,
-      no_tlp: res.data.data.no_tlp
+      no_tlp: res.data.data.no_tlp,
     });
   };
 
@@ -58,25 +58,15 @@ export default function Edit() {
     }
   };
   return (
-    <main className=" md:h-[20rem] h-[28rem]">
-      <div className="container flex items-center justify-center">
-        <div className="bg-white-20 md:ml-40 rounded-2xl mt-10 sm:mt-[9rem] lg:mt-[2rem]">
-          <div className="m-10">
-            <Form
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-              edit
-            />
-            {/* <FormSignin
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-            /> */}
-          </div>
-        </div>
+    <main className="container flex items-center justify-center  md:mt-[-4rem]">
+      <div className="bg-white-20 md:ml-40 rounded-2xl mt-1 md:mt-[3rem] p-7 shadow-xl ">
+        <Form
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          form={form}
+          isLoading={isLoading}
+          edit
+        />
       </div>
     </main>
   );
