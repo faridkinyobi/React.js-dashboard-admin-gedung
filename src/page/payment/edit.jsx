@@ -99,25 +99,15 @@ export default function Edit() {
     }
   };
   return (
-    <main className="md:h-[20rem] h-[28rem]">
-      <div className="container flex  justify-center ">
-        <div className="bg-white-20 md:ml-40 rounded-2xl mt-5  ">
-          <div className="mx-10 my-6">
-            <Form
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-              edit
-            />
-            {/* <FormSignin
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-            /> */}
-          </div>
-        </div>
+    <main className="container flex items-center justify-center  md:mt-[-4rem]">
+      <div className="bg-white-20 md:ml-40 rounded-2xl mt-1 md:mt-[3rem] p-7 shadow-xl ">
+        <Form
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          form={form}
+          isLoading={isLoading}
+          edit
+        />
       </div>
     </main>
   );
