@@ -17,6 +17,7 @@ export default function Form({
         label="pengeluaran"
         name="pengeluaran"
         value={form.pengeluaran}
+        thousandSeparator={true}
         onValueChange={(values) => {
           const { floatValue } = values;
           handleChange({ target: { name: "pengeluaran", value: floatValue } });
