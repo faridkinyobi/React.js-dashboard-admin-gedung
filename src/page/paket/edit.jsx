@@ -33,7 +33,6 @@ export default function Edit() {
 
   const fetchOnePaket = async () => {
     const res = await getData(`/cms/pakets/${PaketId}`);
-    // console.log(res.data.data.fasilitas.detail, "res");
     setForm({
       ...form,
       titel: res.data.data.titel,
@@ -108,29 +107,19 @@ export default function Edit() {
     }
   };
   return (
-    <main className=" md:h-[20rem] h-[28rem]">
-      <div className="container flex items-center justify-center">
-        <div className="bg-white-20 md:ml-40 rounded-2xl mt-10 sm:mt-[9rem] lg:mt-[2rem]">
-          <div className="m-10">
-            <Form
-              edit
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-              handleFasilitasChange={handleFasilitasChange}
-              handlePlusHarga={handlePlusHarga}
-              handleHargaChange={handleHargaChange}
-              handlePlusFasilitas={handlePlusFasilitas}
-            />
-            {/* <FormSignin
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-            /> */}
-          </div>
-        </div>
+    <main className="container flex items-center justify-center  md:mt-[-4rem]">
+      <div className="bg-white-20 md:ml-40 rounded-2xl mt-1 md:mt-[3rem] p-7 shadow-xl ">
+        <Form
+          edit
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          form={form}
+          isLoading={isLoading}
+          handleFasilitasChange={handleFasilitasChange}
+          handlePlusHarga={handlePlusHarga}
+          handleHargaChange={handleHargaChange}
+          handlePlusFasilitas={handlePlusFasilitas}
+        />
       </div>
     </main>
   );
