@@ -40,7 +40,8 @@ export default function Form({
       <Input
         name="Number"
         type="number"
-        placeholder="Masukan Nomer Rekening"
+        maxlength="20"
+        placeholder="xxxx xxxx xxxx xxxx"
         label="Nomer Rekening"
         onChange={handleChange}
         value={form.Number}

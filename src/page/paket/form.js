@@ -1,7 +1,6 @@
 import React from "react";
 import Input from "../../components/TextInputLabel";
 import Button from "../../components/Button";
-import { NumericFormat } from "react-number-format";
 import InputRp from "../../components/TextInputNumber/index";
 export default function Form({
   form,
@@ -78,7 +77,7 @@ export default function Form({
               <label>Harga Detail</label>
               <InputRp
                 // customInput={Input}
-                // thousandSeparator={true}
+                thousandSeparator={true}
                 prefix={"Rp "}
                 name="hargadetail"
                 value={harga.hargadetail}

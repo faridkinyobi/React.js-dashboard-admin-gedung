@@ -6,16 +6,18 @@ export default function index({
   value,
   label,
   onValueChange,
-  placeholder
+  placeholder,
+  prefix,
+  thousandSeparator,
 }) {
   return (
     <div className="Form-input flex  flex-col  col-span-1 my-1 ">
       <label className="label text-xl text-blue-40">{label}</label>
       <NumericFormat
-      placeholder={placeholder}
+        placeholder={placeholder}
         customInput={Input}
-        thousandSeparator={true}
-        prefix={"Rp "}
+        thousandSeparator={thousandSeparator}
+        prefix={prefix}
         name={name}
         value={value}
         onValueChange={onValueChange}
