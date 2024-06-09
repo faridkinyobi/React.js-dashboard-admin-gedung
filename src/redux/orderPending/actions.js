@@ -37,7 +37,7 @@ export const fetchOrderPending = () => {
 
     try {
       // await new Promise((delay) => setTimeout(delay, 100));
-      let res = await debouncedFetchOrderPending("/cms/status");
+      const res = await debouncedFetchOrderPending("/cms/getAllPending");
       dispatch(
         successFetchingOrderPending({
           OrderPending: res.data.data,

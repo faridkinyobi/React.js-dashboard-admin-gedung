@@ -28,7 +28,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         status: statuslist.success,
-        data: !action.total? action.totalStaus:action.total
+        data: action.total
       };
 
     default:

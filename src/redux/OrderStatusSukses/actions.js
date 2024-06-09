@@ -31,16 +31,16 @@ export const errorFetchingCard = () => {
   };
 };
 
-export const fetchTotalPenyewa = () => {
+export const fetchTotalOrderSukses = () => {
   return async (dispatch) => {
     dispatch(startFetchingCard());
 
     try {
-      // await new Promise((delay) => setTimeout(delay, 100));
-      let res = await debouncedFetchCard("/cms/penyewaTotal");
+      const res = await debouncedFetchCard("/cms/totalSukses");
+
       dispatch(
         successFetchingCard({
-          total: res.data.data
+          total: res.data.data,
         })
       );
     } catch (error) {
@@ -48,4 +48,3 @@ export const fetchTotalPenyewa = () => {
     }
   };
 };
-

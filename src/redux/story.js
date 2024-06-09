@@ -15,7 +15,7 @@ import PaketReducer from "./paket/reducer.js";
 import PaymentReducer from "./payment/reducer.js";
 import UserReducer from "./user/reducer.js";
 import LaporanReducer from "./Laporan/reducer.js";
-import CardReducer from "./totalPenyewa/reducer.js";
+import CardReducer from "./OrderStatusSukses/reducer.js";
 import BuktiReducer from "./bukti/reducer.js";
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

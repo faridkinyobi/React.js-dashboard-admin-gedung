@@ -40,12 +40,12 @@ export const errorFetchingUser = () => {
   };
 };
 
-export const fetchPelanggan = () => {
+export const fetchPelanggan = (Tot) => {
   return async (dispatch) => {
     dispatch(startFetchingUser());
 
     try {
-      let resPelanggan= await debouncedFetchUser("/cms/getpelanggan");
+      const resPelanggan= await debouncedFetchUser(Tot? "/cms/pelangganTotal": "/cms/getpelanggan");
       dispatch(
         successFetchingUser({
           Pelanggan: resPelanggan.data.data,
@@ -56,12 +56,13 @@ export const fetchPelanggan = () => {
     }
   };
 };
+
 export const fetchAdmin = () => {
   return async (dispatch) => {
     dispatch(startFetchingUser());
 
     try {
-      let res = await debouncedFetchUser("/cms/getadmin");
+      const res = await debouncedFetchUser("/cms/getadmin");
       dispatch(
         successFetchingUser({
           Admin: res.data.data

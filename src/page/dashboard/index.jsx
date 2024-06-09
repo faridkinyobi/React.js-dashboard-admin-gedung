@@ -1,29 +1,32 @@
 import React, { useEffect } from "react";
-import { format } from "date-fns";
 import { fetchOrderPending } from "../../redux/orderPending/actions";
-import { fetchTotalPenyewa } from "../../redux/totalPenyewa/actions";
+import { fetchTotalOrderSukses } from "../../redux/OrderStatusSukses/actions";
 import { fetchTotalStatusPending } from "../../redux/order/actions";
+import { fetchPelanggan} from "../../redux/user/actions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   // FaDonate,
   FaRestroom,
   // FaHandHoldingUsd,
-  // FaChartBar,
+  FaChartBar,
   FaClock,
-  FaGlobe,
+  // FaGlobe,
 } from "react-icons/fa";
 import InfoCard from "../../components/card";
+import { formatDate } from "../../utils/formatDate";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
 
   const OrderPending = useSelector((state) => state.OrderPending);
   const StatusPending = useSelector((state) => state.Order);
-  const Card = useSelector((state) => state.Card);
+  const TotSukses = useSelector((state) => state.Card);
+  const Card = useSelector((state) => state.User);
 
   useEffect(() => {
     dispatch(fetchOrderPending());
-    dispatch(fetchTotalPenyewa());
+    dispatch(fetchTotalOrderSukses());
+    dispatch(fetchPelanggan(true));
     dispatch(fetchTotalStatusPending());
   }, [dispatch]);
 
@@ -36,8 +39,16 @@ export default function Dashboard() {
             icon={
               <FaRestroom className=" text-white-10/90 px-5 py-2 mr-2 bg-green-600/50 w-28 h-full text-left rounded-s-lg" />
             }
-            title="Total Penyewa"
+            title="Total Pelanggan"
             number={Card.data | "Loading..."}
+          />
+          <InfoCard
+            className="bg-red-400 w-[18rem]  shadow-emerald-50/60"
+            icon={
+              <FaChartBar className=" text-white-10/90 px-5 py-2 mr-2 bg-red-600/50 w-28 h-full text-left rounded-s-lg" />
+            }
+            title="Order sukses"
+            number={TotSukses.data | "Loading..."}
           />
 
           {/* <div className="bg-yellow-300 w-[18rem] h-32  justify-items-center  items-center flex rounded-lg shadow-md shadow-emerald-50/60">
@@ -47,13 +58,6 @@ export default function Dashboard() {
               <h1 className=" text-lg font-medium">100000</h1>
             </div>
           </div> */}
-          <div className="bg-red-400 w-[18rem] h-32  justify-items-center  items-center flex rounded-lg shadow-md shadow-emerald-50/60">
-            <FaGlobe className=" text-white-10/90 px-5 py-2 mr-2 bg-red-600/50 w-28 h-full text-left rounded-s-lg" />
-            <div className="text-left">
-              <h4 className="my-1 font-extrabold">Total pembayaran Online</h4>
-              <h1 className=" text-lg font-medium">1000</h1>
-            </div>
-          </div>
           {/* <div className="bg-blue-400 w-[18rem] h-32  justify-items-center  items-center flex rounded-lg shadow-md shadow-emerald-50/60">
             <FaHandHoldingUsd className=" text-white-10/90 px-5 py-2 mr-2 bg-blue-600/50 w-28 h-full text-left rounded-s-lg" />
             <div className="text-left">
@@ -113,7 +117,7 @@ export default function Dashboard() {
                     </p>
                   </td>
                   <td className="p-2">
-                    {format(new Date(item.date), "dd/MM/yyyy")}
+                    {formatDate(new Date(item.date))}
                   </td>
                 </tr>
               ))
