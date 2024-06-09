@@ -43,14 +43,23 @@ export default function Form({
         value={form.tgl_akhir}
         min={MinCreatDateAkhir()}
       />
-      <Input
-        name="waktu"
-        type="text"
-        placeholder="waktu"
-        label="waktu"
-        onChange={handleChange}
-        value={form.waktu}
-      />
+      <div className="my-1">
+        <div>
+          <label className="label text-xl text-blue-40">Pilih Waktu</label>
+        </div>
+        <select
+          name="waktu"
+          className="rounded-lg focus:border-blue-20 focus:outline-none box-border border border-blue-20 px-4 py-2 lg:w-96 my-2 md:mx-1 h-auto text-blue-40"
+          onChange={handleChange}
+          value={form.waktu}
+        >
+          <option value="">
+            {form.waktu === "" ? " --Pilih Waktu--" : form.waktu}
+          </option>
+          <option value="Pagi">Pagi</option>
+          <option value="Malam">Malam</option>
+        </select>
+      </div>
       <Input
         name="kegiatan"
         type="text"

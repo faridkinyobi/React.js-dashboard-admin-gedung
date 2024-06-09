@@ -4,7 +4,6 @@ import { BsFillTrash3Fill, BsFillPencilFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchJadwal } from "../../redux/jadwal/actions";
 import { deleteData, putData } from "../../utils/fatch";
-import { format } from "date-fns";
 import Button from "../../components/Button";
 import Alert from "../../components/Alert";
 import Thead from "../../components/Thead";
@@ -63,7 +62,7 @@ export default function Jadwal() {
           <Thead
             text={[
               "No",
-              "Date Creat",
+              "tanggal Creat",
               "tanggal mulai",
               "tanggal akhir",
               "waktu",
@@ -84,20 +83,17 @@ export default function Jadwal() {
                 <tr className=" border border-blue-20" key={index}>
                   <td className="p-2">{(index += 1)}</td>
                   <td>
-                    {new Date(item.createdAt).toLocaleString("id-ID", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      second: "2-digit",
-                      timeZoneName: "short",
-                    })}
+                    {formatDate(new Date(item.createdAt))}
                   </td>
                   <td>{formatDate(item.tgl_mulai)}</td>
                   <td>{item.tgl_akhir ? formatDate(item.tgl_akhir) : "-"}</td>
                   <td>{item.waktu}</td>
-                  <td>{item.lama_sewa} hari</td>
+                  <td>
+                    {item.lama_sewa}{" "}
+                    {item.tgl_akhir || /pernikahan/i.test(item.kegiatan)
+                      ? "hari"
+                      : "jam"}{" "}
+                  </td>
                   <td>{item.kegiatan}</td>
                   <td>
                     <p
@@ -113,9 +109,6 @@ export default function Jadwal() {
                   <td className="px-3 border-l  border-blue-20">
                     <input
                       className="w-7 h-5 "
-                      // className={
-                      //   "btn bg-green-10 py-2 px-2 hover:outline-green-10 hover:bg-green-10/90 mr-1"
-                      // }
                       type="checkbox"
                       checked={item.status_kegiatan === "sudah dipesan"}
                       onChange={() =>
