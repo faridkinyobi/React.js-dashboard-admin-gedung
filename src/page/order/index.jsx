@@ -29,7 +29,7 @@ export default function Order() {
       dispatch(fetchOrder());
       hasFetched.current = true;
     }
-  }, [Order.keyword, Order.page, Order.limit]); //dependensi berubah;
+  }, [dispatch,Order.keyword, Order.page, Order.limit]); //dependensi berubah;
 
   const handleFilter = (e) => {
     dispatch(setKeyword(e.target.value));

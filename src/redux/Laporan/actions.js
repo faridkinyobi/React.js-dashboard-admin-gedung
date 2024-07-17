@@ -11,7 +11,6 @@ import {
 import { getData } from "../../utils/fatch";
 import moment from "moment";
 import debounce from "debounce-promise";
-// import { clearNotif } from '../notif/actions';
 
 let debouncedFetchLaporan = debounce(getData, 1000);
 

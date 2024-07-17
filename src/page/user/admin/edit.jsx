@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import Form from "./form";
 import Alert from "../../../components/Alert";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,7 +19,7 @@ export default function Edit() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const fetchOneAdmin = async () => {
+  const fetchOneAdmin = useCallback(async () => {
     const res = await getData(`/cms/getaOnedmin/${Id}`);
     if (res.data && res.data.data) {
       setForm({
@@ -28,11 +28,11 @@ export default function Edit() {
         role: res.data.data[0].role,
       });
     }
-  };
+  },[Id]);
 
   useEffect(() => {
     fetchOneAdmin();
-  }, []);
+  }, [fetchOneAdmin]);
 
   const handleSubmit = async () => {
     setIsLoading(true);

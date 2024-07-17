@@ -1,30 +1,33 @@
 import React, { useEffect } from "react";
 import Button from "../../../components/Button";
 import { useDispatch, useSelector } from "react-redux";
-
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { deleteData } from "../../../utils/fatch";
 import Alert from "../../../components/Alert";
 import Thead from "../../../components/Thead";
-import Swalfire from "../../../components/Swal";
+import Swal from "sweetalert2";
 import { fetchPelanggan } from "../../../redux/user/actions";
 
 export default function Penyewa() {
   const dispatch = useDispatch();
-
   const Pelangan = useSelector((state) => state.User);
-  console.log(Pelangan);
   useEffect(() => {
     dispatch(fetchPelanggan());
   }, [dispatch]);
 
   const handleDelete = (id) => {
-    Swalfire({
+    Swal.fire({
       title: "Apa kamu yakin?",
-      icon: "warning",
+      text: "Anda tidak akan dapat mengembalikan ini!",
+      icon: `warning`,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Iya, Hapus",
+      cancelButtonText: "Batal",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await deleteData(`/cms/penyewa/${id}`);
+        const res = await deleteData(`/deletPelanggan/${id}`);
         Alert({
           title: res?.response?.data?.msg ?? "success",
           icon: "success",

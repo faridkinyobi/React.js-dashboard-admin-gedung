@@ -58,15 +58,15 @@ export default function Edit() {
 
     setForm({ ...form, harga: _temp });
   };
-
+  
   const handlePlusFasilitas = (e) => {
     e.preventDefault();
     let _temp = [...form.fasilitas];
     _temp.push({
-      detail: "", // Changed from `detai` to `detail`
+      detail: "", 
     });
 
-    setForm({ ...form, fasilitas: _temp }); // Changed from `harga` to `fasilitas`
+    setForm({ ...form, fasilitas: _temp }); 
   };
 
   const handleHargaChange = (e, i) => {

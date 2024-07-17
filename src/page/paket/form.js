@@ -12,6 +12,8 @@ export default function Form({
   handleHargaChange,
   handlePlusFasilitas,
   handlePlusHarga,
+  handleDeletform,
+  handleDeletFasilitas,
 }) {
   const defaultFasilitas = { detail: "" };
   const defaultHarga = { kegiatan: "", hari: "", warga: "", hargadetail: 0 };
@@ -40,11 +42,23 @@ export default function Form({
               />
             </div>
           ))}
+          <div>
           <Button
-            title="Tambah fasilitas"
-            onClick={handlePlusFasilitas}
-            className={` btn mt-5 py-2 mx-1 px-5 border bg-blue-200 border-blue-400  hover:outline-blue-400 hover:bg-blue-400/90 shadow `}
-          />
+              title="Tambah form fasilitas"
+              onClick={handlePlusFasilitas}
+              className={` btn mt-5 py-2 mx-1 px-5 border bg-blue-200 border-blue-400  hover:outline-blue-400 hover:bg-blue-400/90 shadow `}
+            />
+            {edit ? (
+              ""
+            ) : (
+              <Button
+                className={`btn mt-5 py-2 mx-1 px-5 border bg-yellow-200 border-yellow-400  hover:outline-yellow-400 hover:bg-yellow-400/90 shadow `}
+                title="Hapus form fasilitas"
+                onClick={handleDeletFasilitas}
+              />
+            )}
+
+          </div>
         </div>
         <div>
           {(Array.isArray(form.harga) ? form.harga : [defaultHarga]).map(
@@ -93,11 +107,22 @@ export default function Form({
               </div>
             )
           )}
-          <Button
-            className={`btn mt-5 py-2 mx-1 px-5 border bg-yellow-200 border-yellow-400  hover:outline-yellow-400 hover:bg-yellow-400/90 shadow `}
-            title="Tambah Harga"
-            onClick={handlePlusHarga}
-          />
+          <div>
+            <Button
+              className={`btn mt-5 py-2 mx-1 px-5 border bg-blue-200 border-blue-400  hover:outline-blue-400 hover:bg-blue-400/90 shadow  `}
+              title="Tambah form Harga"
+              onClick={handlePlusHarga}
+            />
+            {edit ? (
+              ""
+            ) : (
+              <Button
+                className={`btn mt-5 py-2 mx-1 px-5 border bg-yellow-200 border-yellow-400  hover:outline-yellow-400 hover:bg-yellow-400/90 shadow `}
+                title="Hapus form Harga"
+                onClick={handleDeletform}
+              />
+            )}
+          </div>
         </div>
       </div>
 

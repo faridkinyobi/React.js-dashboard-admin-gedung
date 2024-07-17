@@ -19,7 +19,7 @@ import CardReducer from "./OrderStatusSukses/reducer.js";
 import BuktiReducer from "./bukti/reducer.js";
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
+// const composerEnhancer = compose;
 const rootReducers = combineReducers({
   auth: authReducer,
   OrderPending: OrderPendingReducer,

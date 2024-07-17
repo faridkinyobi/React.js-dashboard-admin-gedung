@@ -14,18 +14,21 @@ import {
 } from "../../redux/Laporan/actions";
 import { formatHarga } from "../../utils/formatHarga";
 import { formatDate } from "../../utils/formatDate";
+import { useReactToPrint } from "react-to-print";
+import { useDownloadExcel } from 'react-export-table-to-excel';
 
 export default function Index() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const componentRef = useRef();
   const laporan = useSelector((state) => state.Laporan);
-  const hasFetched = useRef(false); // loop yang tak diinginkan
+  const hasFetched = useRef(false); // loop yang tidak diinginkan
   useEffect(() => {
     if (!hasFetched.current) {
       dispatch(fetchLaporan());
       hasFetched.current = true;
     }
-  }, [laporan.page, laporan.limit, laporan.startDate, laporan.endDate]); //dependensi berubah
+  }, [dispatch,laporan.page, laporan.limit, laporan.startDate, laporan.endDate]); //dependensi
 
   const handlePageChange = (e) => {
     dispatch(setLimit(e.target.value));
@@ -40,6 +43,14 @@ export default function Index() {
     dispatch(setEndDate(e.target.value));
     dispatch(fetchLaporan());
   };
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: componentRef.current,
+    filename: 'Laporan',
+    sheet: 'laporan'
+})
   return (
     <div className="items-center px-4 lg:px-20 text-blue-40">
       <div className=" flex flex-wrap justify-between items-center">
@@ -76,10 +87,28 @@ export default function Index() {
             title={"pengeluaran"}
             onClick={() => navigate("/laporan/create")}
           />
+          <Button
+            className={
+              ".btn bg-blue-300 py-3 px-10   border border-blue-500 hover:outline-blue-500 hover:bg-blue-400/90 mx-2  shadow-md rounded-full"
+            }
+            title={"Print"}
+            onClick={handlePrint}
+          />
+          <Button
+            className={
+              ".btn bg-blue-300 py-3 px-10   border border-blue-500 hover:outline-blue-500 hover:bg-blue-400/90 shadow-md rounded-full"
+            }
+            title={"excel"}
+            onClick={onDownload}
+          />
         </div>
       </div>
-      <div className=" mt-3 mb-2 overflow-x-scroll md:overflow-hidden">
-        <table className="text-center  w-full h-auto border border-blue-20">
+      <div
+        className=" mt-3 mb-2 overflow-x-scroll md:overflow-hidden print:overflow-x-hidden"
+        ref={componentRef}
+      >
+        <h1 className="hidden text-center my-3 font-bold text-sm print:block print:text-xl">LAPORAN KEUANGAN GEDUNG DESA CANGKOL</h1>
+        <table className="text-center  w-full print:w-auto h-auto border border-blue-20 mx-0 print:mx-5">
           <Thead
             text={[
               "No",
@@ -90,7 +119,7 @@ export default function Index() {
               "Credit",
               "Saldo",
             ]}
-            className={"px-8 py-2"}
+            className={"px-8 py-2 print:px-4"}
           />
           <tbody>
             {laporan.status === "process" ? (
@@ -100,19 +129,8 @@ export default function Index() {
             ) : (
               laporan.data.map((items, index) => (
                 <tr className="border border-blue-20" key={index}>
-                  <td className="px-2 py-2">{index + 1}</td>
-                  {/* <td className="px-2 py-2">
-                    {" "}
-                    {new Date(items.date).toLocaleString("id-ID", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </td> */}
-                  <td className="px-2 py-2">
-                    
-                    {formatDate(items.date)}
-                  </td>
+                  <td className="px-2 py-2 print:px-0">{index + 1}</td>
+                  <td className="px-2 py-2 print:px-0">{formatDate(items.date)}</td>
                   <td>{items.petugas}</td>
                   <td>{items.desc}</td>
                   <td className="text-left">{formatHarga(items.pemasukan)}</td>

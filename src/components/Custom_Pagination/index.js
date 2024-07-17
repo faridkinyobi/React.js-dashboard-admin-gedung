@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React  from "react";
 import { useDispatch } from "react-redux";
 // import { fetchOrder, setPage } from "../../redux/order/actions";
 const CustomPagination = ({ pages, page, setPage, fetch }) => {

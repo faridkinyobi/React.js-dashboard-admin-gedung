@@ -36,17 +36,39 @@ export default function Create() {
 
     setForm({ ...form, harga: _temp });
   };
+  const handleDeletform = (e) => {
+    e.preventDefault();
+    let _temp = [...form.harga];
 
+    _temp.pop()({
+      kegiatan: "",
+      hari: "",
+      warga: "",
+      hargadetail: "",
+    });
+
+    setForm({ ...form, harga: _temp });
+  };
   const handlePlusFasilitas = (e) => {
     e.preventDefault();
     let _temp = [...form.fasilitas];
     _temp.push({
-      detail: "", // Changed from `detai` to `detail`
+      detail: "",
     });
 
-    setForm({ ...form, fasilitas: _temp }); // Changed from `harga` to `fasilitas`
+    setForm({ ...form, fasilitas: _temp });
   };
 
+  const handleDeletFasilitas = (e) => {
+    e.preventDefault();
+    let _temp = [...form.fasilitas];
+    _temp.pop({
+      detail: "", 
+    });
+
+    setForm({ ...form, fasilitas: _temp }); 
+  };
+  
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -97,6 +119,8 @@ export default function Create() {
           handlePlusHarga={handlePlusHarga}
           handleHargaChange={handleHargaChange}
           handlePlusFasilitas={handlePlusFasilitas}
+          handleDeletform={handleDeletform}
+          handleDeletFasilitas={handleDeletFasilitas}
         />
       </div>
     </main>

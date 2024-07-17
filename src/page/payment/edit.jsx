@@ -3,7 +3,6 @@ import Form from "./form";
 import Alert from "../../components/Alert";
 import { useNavigate, useParams } from "react-router-dom";
 import { putData, getData, postData, deleteData } from "../../utils/fatch";
-import Button from "../../components/Button";
 
 export default function Edit() {
   // const dispatch = useDispatch();

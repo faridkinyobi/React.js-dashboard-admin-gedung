@@ -36,8 +36,6 @@ export default function Paket() {
 
   useEffect(() => {
     chekAccess();
-  }, []);
-  useEffect(() => {
     dispatch(fetchPaket());
   }, [dispatch]);
 
