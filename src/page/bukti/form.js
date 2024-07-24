@@ -15,9 +15,8 @@ export default function Form({
         name="avatar"
         type="file"
         placeholder="img"
-        label="Foto Bank"
+        label="Foto Bukti Pembayaran"
         onChange={handleChange}
-        // value={form.avatar}
       />
       {form.avatar !== "" && (
         <div>

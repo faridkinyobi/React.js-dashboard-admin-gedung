@@ -93,12 +93,6 @@ export default function Edit() {
               isLoading={isLoading}
               edit
             />
-            {/* <FormSignin
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-            /> */}
           </div>
         </div>
       </div>

@@ -92,12 +92,6 @@ export default function Create() {
             form={form}
             isLoading={isLoading}
           />
-          {/* <FormSignin
-              handleChange={handleChange}
-              handleSubmit={handleSubmit}
-              form={form}
-              isLoading={isLoading}
-            /> */}
         </div>
       </div>
     </main>
