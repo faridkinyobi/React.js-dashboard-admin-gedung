@@ -8,7 +8,7 @@ export default function Edit() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [form, setForm] = useState({
-    BuktiUangMuka: id,
+    id: id,
     BuktiPelunasan: "",
     avatar: "",
   });
@@ -61,7 +61,7 @@ export default function Edit() {
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    const res = await putData(`/cms/pembayaran/${id}`, form);
+    const res = await putData(`/cms/pembayaran`, form);
     if (res?.data?.data) {
       Alert({
         title: "success",
@@ -80,6 +80,7 @@ export default function Edit() {
       });
     }
   };
+
   return (
     <main className="md:h-[20rem] h-[28rem]">
       <div className="container flex  justify-center ">

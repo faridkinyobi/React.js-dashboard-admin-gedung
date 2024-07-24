@@ -87,22 +87,31 @@ export default function Order() {
       paymen === "Cash On Delivery" ? (
         <Button
           className={
-            "btn bg-slate-400 py-3 px-10 hover:outline-slate-500 hover:bg-slate-10/90 "
+            "btn bg-slate-400 py-3 px-3 border border-slate-500 hover:outline-slate-500 hover:bg-slate-400/90 mx-1  shadow-md  "
           }
-          title={"Bukti Uang muka"}
+          title={"Add Bukti Uang muka"}
           onClick={() => navigate(`/bukti/create/${id}`)}
         />
       ) : (
         ""
       )}
-
+      {DataPembayaran?.data?.status === true &&
+        paymen === "Cash On Delivery" && (
+          <Button
+            className={
+              "btn bg-slate-400 py-3 px-3 border border-slate-500 hover:outline-slate-500 hover:bg-slate-400/90 mx-1  shadow-md  "
+            }
+            title={"Add Bukti Pelunasan"}
+            onClick={() => navigate(`/bukti/edit/${DataPembayaran.data._id}`)}
+          />
+        )}
       {/* start Map Bukti Pembayaran */}
       <div className="overflow-x-scroll md:overflow-hidden flex-row">
         <h1 className=" my-2">Bukti Nota pembayaran</h1>
         <table className="text-left text-white-10 w-full">
           <Thead
             text={["Bukti Pembayaran Uang muka", " Bukti Pelunasan", "aktor"]}
-            className={"px-8 py-2"}
+            className={"px-4 py-2"}
           />
           <tbody>
             {DataPembayaran === "process" ? (
@@ -127,26 +136,16 @@ export default function Order() {
                     alt="50x50"
                   />
                 </td>
-                <td>
-                  {DataPembayaran?.data?.status === true &&
-                    paymen === "Cash On Delivery" && (
+                <td className="">
+                  {DataPembayaran?.data?.status === true && (
                       <Button
-                        className={
-                          "btn bg-slate-400 py-1 px-3 border border-slate-500 hover:outline-slate-500 hover:bg-slate-400/90 mx-1  shadow-md  "
-                        }
-                        title={"Bukti Pelunasan"}
-                        onClick={() =>
-                          navigate(`/bukti/edit/${DataPembayaran.data._id}`)
-                        }
-                      />
+                      className={
+                        "btn bg-yellow-300 py-1 px-3 border border-yellow-500 hover:outline-yellow-500 hover:bg-yellow-400/90 shadow-md "
+                      }
+                      title="Uang Dp"
+                      onClick={() => HandleStatusDP(id)}
+                    />
                     )}
-                  <Button
-                    className={
-                      "btn bg-yellow-300 py-1 px-3 border border-yellow-500 hover:outline-yellow-500 hover:bg-yellow-400/90 mx-1  shadow-md "
-                    }
-                    title="Uang Dp"
-                    onClick={() => HandleStatusDP(id)}
-                  />
                 </td>
               </tr>
             )}
@@ -203,7 +202,7 @@ export default function Order() {
 
       {/* start Jadwal */}
       <div className="my-5 overflow-x-scroll md:overflow-hidden">
-      <h1 className=" my-4">Jadwal</h1>
+        <h1 className=" my-4">Jadwal</h1>
         <table className=" text-center text-blue-40  w-full">
           <Thead
             text={[
@@ -305,10 +304,10 @@ export default function Order() {
       {/* end Jadwal */}
 
       <div className="mt-3 mb-2 overflow-x-scroll md:overflow-hidden">
-      <h1 className=" my-4">Penyewa</h1>
+        <h1 className=" my-4">Penyewa</h1>
         <table className=" text-center text-blue-20 w-full">
           <Thead
-            text={[ "Nama", "Email", "Alamat", "Nomer telepon"]}
+            text={["Nama", "Email", "Alamat", "Nomer telepon"]}
             className={"px-8 py-2"}
           />
 

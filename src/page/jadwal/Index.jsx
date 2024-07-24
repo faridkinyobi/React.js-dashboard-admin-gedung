@@ -100,7 +100,7 @@ export default function Jadwal() {
                       className={`py-1 px-1 mx-4 border rounded-2xl ${
                         item.status_kegiatan === "sedang diproses"
                           ? " bg-yellow-300/45 border-yellow-300"
-                          : ""
+                          : "bg-green-300/45 border-green-300"
                       }`}
                     >
                       {item.status_kegiatan}

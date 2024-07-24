@@ -28,6 +28,7 @@ export default function Penyewa() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const res = await deleteData(`/deletPelanggan/${id}`);
+        
         Alert({
           title: res?.response?.data?.msg ?? "success",
           icon: "success",
