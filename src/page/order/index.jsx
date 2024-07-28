@@ -29,7 +29,7 @@ export default function Order() {
       dispatch(fetchOrder());
       hasFetched.current = true;
     }
-  }, [dispatch,Order.keyword, Order.page, Order.limit]); //dependensi berubah;
+  }, [dispatch, Order.keyword, Order.page, Order.limit]); //dependensi berubah;
 
   const handleFilter = (e) => {
     dispatch(setKeyword(e.target.value));
@@ -42,12 +42,12 @@ export default function Order() {
   };
 
   const HandleStatusGagal = async (id) => {
-    dispatch(UpdateOrderStatus(id, true));
+    dispatch(UpdateOrderStatus(id, true, false, false));
     dispatch(fetchOrder());
   };
 
   const HandleStatusSukses = async (id) => {
-    dispatch(UpdateOrderStatus(id)).then(() => {
+    dispatch(UpdateOrderStatus(id, false, false, true)).then(() => {
       dispatch(fetchOrder());
     });
   };
@@ -109,17 +109,15 @@ export default function Order() {
           <thead className=" bg-blue-30 text-white-20">
             <tr className="">
               <th className="px-1 pl-3">No</th>
-              <th className="px-2 ">Tanggal Order</th>
-              <th className="px-6 ">Namber Order</th>
-              <th className="px-2 ">Titel Peket</th>
+              <th className="px-2 ">Tanggal Pemesanan</th>
+              <th className="px-3 ">Kode Pemesanan</th>
+              <th className="px-2 ">Nama Paket</th>
               <th className="px-2">Status</th>
-              <th className="px-2">Total pembayan</th>
-              <th className="px-1 md:px-8  ">Total uang muka</th>
-              <th className="px-2 ">Sisa pembayaran</th>
-              <th className="px-2 py-1">Metode pembayaran</th>
-              <th className=" md:px-24 px-40 border-l  border-blue-20">
-                aktor
-              </th>
+              <th className="px-2">Total Pembayaran</th>
+              <th className="px-1 md:px-3  ">Uang Muka</th>
+              <th className="px-2 ">Sisa Pembayaran</th>
+              <th className="px-2 py-1">Metode Pembayaran</th>
+              <th className=" md:px-24 px-40 border-l  border-blue-20">Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -148,8 +146,11 @@ export default function Order() {
                   <td>
                     <p
                       className={`py-1 px-1 mx-2 border  rounded-2xl ${
-                        item.status === "pending" || item.status === "uang muka"
+                        item.status === "pending"
                           ? "bg-yellow-300/45 border-yellow-300"
+                          : item.status === "uang muka" ||
+                            item.status === "proses"
+                          ? "bg-blue-300/45 border-blue-300"
                           : item.status === "sukses"
                           ? "bg-lime-600/45 border-lime-600"
                           : "bg-red-500/45 border-red-500"
@@ -163,34 +164,11 @@ export default function Order() {
                   <td>{formatHarga(item.sisa_pembayaran)}</td>
                   <td>{item.MetPembayaran}</td>
                   <td className="p-2 border-l  border-blue-20 ">
-                    {item.status ? (
-                      <Button
-                        className={
-                          "btn bg-green-10/50 border border-green-500 py-1 px-3 hover:outline-green-500 hover:bg-green-10/75 shadow-md"
-                        }
-                        title="sukses"
-                        onClick={() => HandleStatusSukses(item._id)}
-                      />
-                    ) : null}
-                    <Button
-                      className={
-                        "btn bg-red-300 py-1 px-3 border border-red-500 hover:outline-red-500 hover:bg-red-400/90 mx-1  shadow-md "
-                      }
-                      title="gagal"
-                      onClick={() => HandleStatusGagal(item._id)}
-                    />
-                    <Button
-                      className={
-                        "btn bg-orange-300 py-1 px-3 border border-orange-500 hover:outline-orange-500 hover:bg-orange-400/90 mr-1  shadow-md "
-                      }
-                      title="hapus"
-                      onClick={() => handleDelete(item._id)}
-                    />
                     <Button
                       className={
                         "btn bg-blue-300 py-1 px-3 border border-blue-500 hover:outline-blue-500 hover:bg-blue-400/90 mr-1 shadow-md"
                       }
-                      title="detail"
+                      title="Detail"
                       onClick={() =>
                         HandleCoba({
                           paket: item.paket,
@@ -201,6 +179,29 @@ export default function Order() {
                           harga: item.historyPaket.hargadetail,
                         })
                       }
+                    />
+                    {item.status ? (
+                      <Button
+                        className={
+                          "btn bg-green-10/50 border border-green-500 py-1 px-3 hover:outline-green-500 hover:bg-green-10/75 shadow-md"
+                        }
+                        title="Proses"
+                        onClick={() => HandleStatusSukses(item._id)}
+                      />
+                    ) : null}
+                    <Button
+                      className={
+                        "btn bg-red-300 py-1 px-3 border border-red-500 hover:outline-red-500 hover:bg-red-400/90 mx-1  shadow-md "
+                      }
+                      title="Gagal"
+                      onClick={() => HandleStatusGagal(item._id)}
+                    />
+                    <Button
+                      className={
+                        "btn bg-orange-300 py-1 px-3 border border-orange-500 hover:outline-orange-500 hover:bg-orange-400/90 mr-1  shadow-md "
+                      }
+                      title="Hapus"
+                      onClick={() => handleDelete(item._id)}
                     />
                   </td>
                 </tr>

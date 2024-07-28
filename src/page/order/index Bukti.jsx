@@ -13,7 +13,7 @@ import { fetchPaket } from "../../redux/paket/actions";
 import { fetchJadwal } from "../../redux/jadwal/actions";
 import { fetchBukti } from "../../redux/bukti/actions";
 import { fetchOrder, UpdateOrderStatus } from "../../redux/order/actions";
-
+//import { formatDate } from "../../utils/formatDate";
 export default function Order() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -69,11 +69,16 @@ export default function Order() {
   };
 
   const HandleStatusDP = async (id) => {
-    dispatch(UpdateOrderStatus(id, false, true));
+    dispatch(UpdateOrderStatus(id, false, true, false));
     dispatch(fetchOrder());
     navigate("/order");
   };
-
+  const HandleStatusSukses = async (id) => {
+    dispatch(UpdateOrderStatus(id)).then(() => {
+      dispatch(fetchOrder());
+    });
+    navigate("/order");
+  };
   return (
     <main className="items-center px-4 lg:px-20 ">
       <Button
@@ -107,11 +112,11 @@ export default function Order() {
         )}
       {/* start Map Bukti Pembayaran */}
       <div className="overflow-x-scroll md:overflow-hidden flex-row">
-        <h1 className=" my-2">Bukti Nota pembayaran</h1>
+        <h1 className=" my-2">Bukti Nota Pembayaran</h1>
         <table className="text-left text-white-10 w-full">
           <Thead
-            text={["Bukti Pembayaran Uang muka", " Bukti Pelunasan", "aktor"]}
-            className={"px-4 py-2"}
+            text={["Bukti Nota Uang Muka", "Bukti Pelunasan", "Aksi"]}
+            className={"px-10 py-2"}
           />
           <tbody>
             {DataPembayaran === "process" ? (
@@ -138,14 +143,23 @@ export default function Order() {
                 </td>
                 <td className="">
                   {DataPembayaran?.data?.status === true && (
-                      <Button
+                    <Button
                       className={
-                        "btn bg-yellow-300 py-1 px-3 border border-yellow-500 hover:outline-yellow-500 hover:bg-yellow-400/90 shadow-md "
+                        "btn bg-yellow-300 py-1 px-3 border border-yellow-500 hover:outline-yellow-500 hover:bg-yellow-400/90 shadow-md mx-5 "
                       }
                       title="Uang Dp"
                       onClick={() => HandleStatusDP(id)}
                     />
-                    )}
+                  )}
+                  {DataPembayaran?.data?.BuktiUangMuka?.name ?(
+                    <Button
+                      className={
+                        "btn bg-green-10/50 border border-green-500 py-1 px-3 hover:outline-green-500 hover:bg-green-10/75 shadow-md"
+                      }
+                      title="sukses"
+                      onClick={() => HandleStatusSukses(id)}
+                    />
+                  ):"" }
                 </td>
               </tr>
             )}
@@ -202,17 +216,17 @@ export default function Order() {
 
       {/* start Jadwal */}
       <div className="my-5 overflow-x-scroll md:overflow-hidden">
-        <h1 className=" my-4">Jadwal</h1>
+        <h1 className=" my-4">Jadwal </h1>
         <table className=" text-center text-blue-40  w-full">
           <Thead
             text={[
-              "tanggal mulai",
-              "tanggal akhir",
-              "waktu",
-              "lama sewa",
-              "kegiatan",
-              "status",
-              "aktor",
+              "Tanggal Mulai",
+              "Tanggal Akhir",
+              "Waktu",
+              "Lama Sewa",
+              "Kegiatan",
+              "Status",
+              "Aksi",
             ]}
             className={"px-8 py-2"}
           />
@@ -231,20 +245,28 @@ export default function Order() {
                       month: "long",
                       day: "numeric",
                     }
-                  )}{" "}
+                  )}
                 </td>
                 <td>
-                  {new Date(DataJadwal?.data?.tgl_akhir).toLocaleString(
-                    "id-ID",
-                    {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    }
-                  )}{" "}
+                  {DataJadwal?.data?.tgl_akhir
+                    ? new Date(DataJadwal?.data?.tgl_akhir).toLocaleString(
+                        "id-ID",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }
+                      )
+                    : "-"}
                 </td>
                 <td>{DataJadwal?.data?.waktu}</td>
-                <td>{DataJadwal?.data?.lama_sewa} hari</td>
+                <td>
+                  {DataJadwal?.data?.lama_sewa}{" "}
+                  {DataJadwal?.data?.tgl_akhir ||
+                  /pernikahan/i.test(DataJadwal?.data?.kegiatan)
+                    ? "hari"
+                    : "jam"}{" "}
+                </td>
                 <td>{DataJadwal?.data?.kegiatan}</td>
                 <td>
                   <p
@@ -304,10 +326,10 @@ export default function Order() {
       {/* end Jadwal */}
 
       <div className="mt-3 mb-2 overflow-x-scroll md:overflow-hidden">
-        <h1 className=" my-4">Penyewa</h1>
+        <h1 className=" my-4">Data Penyewa</h1>
         <table className=" text-center text-blue-20 w-full">
           <Thead
-            text={["Nama", "Email", "Alamat", "Nomer telepon"]}
+            text={["Nama", "Email", "Alamat", "Nomer Telepon"]}
             className={"px-8 py-2"}
           />
 
